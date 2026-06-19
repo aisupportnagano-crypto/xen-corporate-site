@@ -150,4 +150,111 @@ document.addEventListener('DOMContentLoaded', () => {
       onTilt();
     }
   }
+
+  // ── 見出しの文字分割アニメーション ──
+  // [data-split-text] が付いた要素の中身を1文字ずつ <span class="ch"> に分解し、
+  // 順番にディレイをつけて立ち上がるアニメーションを発生させる
+  document.querySelectorAll('[data-split-text]').forEach((el) => {
+    const html = el.innerHTML;
+    // <br> はそのまま改行として残し、それ以外のテキストノードだけ文字分割する
+    const parts = html.split(/(<br\s*\/?>)/i);
+    let charIndex = 0;
+    const built = parts.map(part => {
+      if (/^<br/i.test(part)) return part;
+      return part.replace(/(<span[^>]*>.*?<\/span>|[^<])/g, (match) => {
+        // 既存の <span class="accent-xxx">語</span> はそのまま個別の塊として扱う
+        if (/^<span/i.test(match)) {
+          const inner = match.replace(/^<span([^>]*)>/i, '').replace(/<\/span>$/i, '');
+          const wrappedInner = inner.split('').map(c => {
+            const delay = (charIndex++ * 0.025).toFixed(3);
+            const safe = c === ' ' ? '&nbsp;' : c;
+            const spClass = c === ' ' ? 'ch sp' : 'ch';
+            return `<span class="${spClass}" style="--d:${delay}s">${safe}</span>`;
+          }).join('');
+          const attrMatch = match.match(/^<span([^>]*)>/i);
+          const attrs = attrMatch ? attrMatch[1] : '';
+          return `<span${attrs}>${wrappedInner}</span>`;
+        }
+        const delay = (charIndex++ * 0.025).toFixed(3);
+        const safe = match === ' ' ? '&nbsp;' : match;
+        const spClass = match === ' ' ? 'ch sp' : 'ch';
+        return `<span class="${spClass}" style="--d:${delay}s">${safe}</span>`;
+      });
+    }).join('');
+    el.innerHTML = `<span class="split-line">${built}</span>`;
+  });
+
+  // ── ヒーロー：Canvasメッシュグラデーション ──
+  const meshCanvas = document.querySelector('.hero-mesh-canvas');
+  if (meshCanvas && meshCanvas.getContext && !prefersReducedMotion) {
+    const ctx = meshCanvas.getContext('2d');
+    let w, h, dpr;
+
+    const resize = () => {
+      const rect = meshCanvas.parentElement.getBoundingClientRect();
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      w = rect.width;
+      h = rect.height;
+      meshCanvas.width = w * dpr;
+      meshCanvas.height = h * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    };
+    resize();
+    window.addEventListener('resize', resize);
+
+    // 3つの色ブロブがゆっくり周回しながら混ざり合う
+    const blobs = [
+      { color: '20,184,166', baseX: 0.25, baseY: 0.35, r: 0.55, speed: 0.00021, phase: 0 },
+      { color: '107,95,255', baseX: 0.75, baseY: 0.25, r: 0.5, speed: 0.00017, phase: 2.1 },
+      { color: '255,107,74', baseX: 0.5, baseY: 0.75, r: 0.5, speed: 0.00026, phase: 4.2 },
+    ];
+
+    function draw(t) {
+      ctx.clearRect(0, 0, w, h);
+      blobs.forEach(b => {
+        const angle = t * b.speed + b.phase;
+        const cx = (b.baseX + Math.cos(angle) * 0.12) * w;
+        const cy = (b.baseY + Math.sin(angle) * 0.12) * h;
+        const radius = b.r * Math.max(w, h);
+        const grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, radius);
+        grad.addColorStop(0, `rgba(${b.color},0.22)`);
+        grad.addColorStop(1, `rgba(${b.color},0)`);
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, w, h);
+      });
+      requestAnimationFrame(draw);
+    }
+    requestAnimationFrame(draw);
+  }
+
+  // ── ヒーロー：マウス追従グロー ──
+  const heroEl = document.querySelector('.hero');
+  if (heroEl && !prefersReducedMotion) {
+    heroEl.addEventListener('mousemove', (e) => {
+      const rect = heroEl.getBoundingClientRect();
+      const x = ((e.clientX - rect.left) / rect.width) * 100;
+      const y = ((e.clientY - rect.top) / rect.height) * 100;
+      heroEl.style.setProperty('--mx', x + '%');
+      heroEl.style.setProperty('--my', y + '%');
+    });
+  }
+
+  // ── 系統図カード：マウス追従3Dティルト＋光沢 ──
+  if (!prefersReducedMotion) {
+    document.querySelectorAll('.lineage-branch').forEach((card) => {
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const px = (e.clientX - rect.left) / rect.width;
+        const py = (e.clientY - rect.top) / rect.height;
+        const rotateY = (px - 0.5) * 10;
+        const rotateX = (0.5 - py) * 10;
+        card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+        card.style.setProperty('--cx', (px * 100) + '%');
+        card.style.setProperty('--cy', (py * 100) + '%');
+      });
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = 'rotateX(0deg) rotateY(0deg)';
+      });
+    });
+  }
 });
