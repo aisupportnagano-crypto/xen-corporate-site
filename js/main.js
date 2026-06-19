@@ -177,6 +177,26 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  // ── ホログラム演出：スマホ（ホバー不可端末）では
+  //    画面に入ったタイミングで一度だけ自動再生する ──
+  if (!prefersReducedMotion) {
+    const isTouchDevice = window.matchMedia('(hover: none)').matches;
+    const holograms = document.querySelectorAll('.mock-hologram');
+
+    if (isTouchDevice && holograms.length && 'IntersectionObserver' in window) {
+      const holoIo = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('holo-play');
+            holoIo.unobserve(entry.target); // 一度再生したら監視終了（再発火しない）
+          }
+        });
+      }, { threshold: 0.5 }); // モックが半分以上見えたら発火
+
+      holograms.forEach(el => holoIo.observe(el));
+    }
+  }
+
   // ── 見出しの文字分割アニメーション ──
   // [data-split-text] が付いた要素の中身を1文字ずつ <span class="ch"> に分解し、
   // 順番にディレイをつけて立ち上がるアニメーションを発生させる
