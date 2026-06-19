@@ -205,6 +205,68 @@ section { position: relative; }
   font-size: 13px;
   color: #fff;
 }
+
+/* ============================================================
+   Glitch logo text ("XEN合同会社")
+   定期的に（数秒おき）一瞬だけ色ズレ・位置ズレを起こす
+   ============================================================ */
+
+.glitch-logo {
+  position: relative;
+  display: inline-block;
+}
+.glitch-logo::before,
+.glitch-logo::after {
+  content: attr(data-text);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--ink);
+  overflow: hidden;
+  opacity: 0;
+}
+.glitch-logo::before {
+  color: #5ef0ff; /* シアン寄り */
+  z-index: -1;
+}
+.glitch-logo::after {
+  color: #ff5fa8; /* マゼンタ寄り */
+  z-index: -1;
+}
+
+@keyframes glitch-anim-1 {
+  0%, 92%, 100% { opacity: 0; transform: translate(0, 0); clip-path: inset(0 0 0 0); }
+  93% { opacity: .85; transform: translate(-2px, 1px); clip-path: inset(10% 0 60% 0); }
+  94% { opacity: .85; transform: translate(2px, -1px); clip-path: inset(55% 0 15% 0); }
+  95% { opacity: .85; transform: translate(-1px, 0); clip-path: inset(30% 0 40% 0); }
+  96% { opacity: 0; transform: translate(0, 0); clip-path: inset(0 0 0 0); }
+}
+@keyframes glitch-anim-2 {
+  0%, 92%, 100% { opacity: 0; transform: translate(0, 0); clip-path: inset(0 0 0 0); }
+  93% { opacity: .85; transform: translate(2px, -1px); clip-path: inset(45% 0 25% 0); }
+  94% { opacity: .85; transform: translate(-2px, 1px); clip-path: inset(5% 0 70% 0); }
+  95% { opacity: .85; transform: translate(1px, 0); clip-path: inset(65% 0 10% 0); }
+  96% { opacity: 0; transform: translate(0, 0); clip-path: inset(0 0 0 0); }
+}
+@keyframes glitch-anim-base {
+  0%, 92%, 100% { transform: translate(0, 0); }
+  93% { transform: translate(1px, 0); }
+  94% { transform: translate(-1px, 0); }
+  95% { transform: translate(1px, 0); }
+  96% { transform: translate(0, 0); }
+}
+
+.glitch-logo::before { animation: glitch-anim-1 5s infinite linear; }
+.glitch-logo::after { animation: glitch-anim-2 5s infinite linear; animation-delay: .04s; }
+.glitch-logo > * { animation: glitch-anim-base 5s infinite linear; }
+.glitch-logo { animation: glitch-anim-base 5s infinite linear; }
+
+@media (prefers-reduced-motion: reduce) {
+  .glitch-logo::before, .glitch-logo::after { display: none; }
+  .glitch-logo { animation: none; }
+}
 .gnav-links {
   display: flex;
   align-items: center;
