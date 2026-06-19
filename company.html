@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>会社概要 — XEN合同会社</title>
+<meta name="description" content="XEN合同会社の会社概要・ミッション・お問い合わせ。共通技術基盤Komiruを開発・運営するスタートアップです。">
+<link rel="stylesheet" href="css/style.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+  .timeline { position: relative; padding-left: 28px; }
+  .timeline::before {
+    content: '';
+    position: absolute; left: 5px; top: 6px; bottom: 6px;
+    width: 1px; background: var(--ink-line-strong);
+  }
+  .timeline-item { position: relative; padding-bottom: 36px; }
+  .timeline-item:last-child { padding-bottom: 0; }
+  .timeline-item::before {
+    content: '';
+    position: absolute; left: -28px; top: 5px;
+    width: 11px; height: 11px; border-radius: 50%;
+    background: var(--ink);
+    border: 2px solid var(--teal);
+  }
+  .timeline-date { font-family: var(--f-mono); font-size: 12px; color: var(--teal); letter-spacing: .06em; margin-bottom: 6px; }
+  .timeline-item h4 { font-size: 16px; color: var(--text-on-dark); margin-bottom: 6px; }
+  .timeline-item p { font-size: 13.5px; color: var(--text-on-dark-soft); }
+
+  .info-table { width: 100%; border-collapse: collapse; }
+  .info-table tr { border-bottom: 1px solid var(--paper-line); }
+  .info-table tr:last-child { border-bottom: none; }
+  .info-table th, .info-table td { text-align: left; padding: 18px 0; vertical-align: top; }
+  .info-table th { width: 180px; font-size: 13px; font-weight: 700; color: var(--text-on-light-soft); font-family: var(--f-mono); letter-spacing: .03em; }
+  .info-table td { font-size: 15px; }
+  @media (max-width: 600px) {
+    .info-table th { width: 110px; font-size: 11.5px; }
+    .info-table td { font-size: 14px; }
+  }
+
+  .form-field { margin-bottom: 20px; }
+  .form-field label { display: block; font-size: 13px; font-weight: 700; margin-bottom: 8px; color: var(--text-on-light); }
+  .form-field input, .form-field textarea, .form-field select {
+    width: 100%; padding: 13px 16px; border: 1px solid var(--paper-line);
+    border-radius: var(--radius-s); font: inherit; font-size: 14.5px;
+    background: #fff; color: var(--text-on-light); transition: border-color .2s ease;
+  }
+  .form-field input:focus, .form-field textarea:focus, .form-field select:focus {
+    border-color: var(--teal); outline: none;
+  }
+  .form-field textarea { resize: vertical; min-height: 130px; }
+</style>
+</head>
+<body>
+
+<nav class="gnav">
+  <div class="gnav-inner">
+    <a class="gnav-logo" href="index.html"><span class="mark">X</span>XEN<span style="color:var(--text-on-dark-soft);font-weight:400;margin-left:2px;">合同会社</span></a>
+    <div class="gnav-links">
+      <a class="gnav-link" href="index.html">トップ</a>
+      <a class="gnav-link" href="products.html">プロダクト</a>
+      <a class="gnav-link current" href="company.html">会社概要</a>
+    </div>
+    <div class="gnav-cta">
+      <a class="btn btn-ghost-dark btn-sm" href="#contact">お問い合わせ</a>
+      <button class="gnav-toggle" aria-label="メニューを開く">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<div class="mobile-menu">
+  <div class="mobile-menu-top">
+    <a class="gnav-logo" href="index.html"><span class="mark">X</span>XEN</a>
+    <button class="mobile-menu-close" aria-label="閉じる">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="mobile-menu-links">
+    <a href="index.html">トップ</a>
+    <a href="products.html">プロダクト</a>
+    <a href="company.html">会社概要</a>
+    <a href="company.html#contact">お問い合わせ</a>
+  </div>
+</div>
+
+<!-- PAGE HERO -->
+<header class="page-hero">
+  <div class="wrap">
+    <div class="eyebrow">COMPANY</div>
+    <h1>現場の「コミる」を、<br>技術でつくり続ける。</h1>
+    <p>XEN合同会社は、共通技術基盤Komiruを核に、複数のプロダクトを開発・運営するスタートアップです。一つの技術を磨き続けることで、現場の課題に長く向き合います。</p>
+  </div>
+</header>
+
+<!-- MISSION -->
+<section class="section--light pad-l" id="mission">
+  <div class="wrap">
+    <div class="split reveal">
+      <div class="split-text">
+        <span class="eyebrow" style="color:var(--indigo-deep)">MISSION</span>
+        <h3 style="margin-top:18px;">伝わらないを、<br>「コミる」に変える。</h3>
+        <p>求人票は出しているのに応募が来ない。お店の魅力はあるのに、検索しても伝わらない。XENは、そうした「本当はいいものなのに、伝わっていない」現場の課題を、AIと技術で解決します。</p>
+        <p>社名のXENは、Komiruという一つの核（コア）から、必要な現場へ技術を分け与えていく姿勢を表しています。プロダクトを増やすことが目的ではなく、現場に向き合い続けることが目的です。</p>
+      </div>
+      <div>
+        <div class="card" style="background:var(--ink);border-color:var(--ink-line);">
+          <div style="font-family:var(--f-mono);font-size:11px;color:var(--teal);letter-spacing:.08em;margin-bottom:16px;">VALUES</div>
+          <ul style="display:flex;flex-direction:column;gap:18px;">
+            <li>
+              <div style="font-family:var(--f-jp);font-weight:700;font-size:15px;color:var(--text-on-dark);margin-bottom:4px;">01. 現場の言葉で考える</div>
+              <div style="font-size:13px;color:var(--text-on-dark-soft);">業界用語ではなく、現場の人が使う言葉でプロダクトを設計します。</div>
+            </li>
+            <li>
+              <div style="font-family:var(--f-jp);font-weight:700;font-size:15px;color:var(--text-on-dark);margin-bottom:4px;">02. ひとつの基盤を磨き続ける</div>
+              <div style="font-size:13px;color:var(--text-on-dark-soft);">作って終わりにせず、Komiruという土台を常にアップデートします。</div>
+            </li>
+            <li>
+              <div style="font-family:var(--f-jp);font-weight:700;font-size:15px;color:var(--text-on-dark);margin-bottom:4px;">03. 小さく試し、早く届ける</div>
+              <div style="font-size:13px;color:var(--text-on-dark-soft);">最短10秒で求人LPが完成するように、現場が待たされない速度を大事にします。</div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TIMELINE -->
+<section class="section--dark pad-l">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">JOURNEY</div>
+      <h2 class="section-title" style="color:var(--text-on-dark)">これまでとこれから</h2>
+      <p class="section-lead">XENは現在も成長を続けるスタートアップです。Komiruを中心に、プロダクトと組織を継続的にアップデートしています。</p>
+    </div>
+    <div class="timeline reveal" style="max-width:640px;">
+      <div class="timeline-item">
+        <div class="timeline-date">FOUNDING</div>
+        <h4>XEN合同会社 設立</h4>
+        <p>共通技術基盤Komiruの開発を開始。「コミる」という体験を技術でつくることを目指してスタート。</p>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">PRODUCT 01</div>
+        <h4>ツクル求人をリリース</h4>
+        <p>Komiruを基盤とした最初のプロダクトとして、AI求人LP生成サービス「ツクル求人」を公開。</p>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">PRODUCT 02</div>
+        <h4>ミセルをリリース</h4>
+        <p>店舗集客領域に向けて「ミセル」を展開。Komiruの仕組みを応用し、地図・写真・口コミを統合したLPを提供開始。</p>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">NOW &amp; NEXT</div>
+        <h4>継続的なアップデート</h4>
+        <p>既存プロダクトの改善と、Komiruを基盤とした新しい展開を継続中。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPANY INFO -->
+<section class="section--light pad-l">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow" style="color:var(--indigo-deep)">OVERVIEW</div>
+      <h2 class="section-title">会社概要</h2>
+    </div>
+    <div class="reveal" style="max-width:760px;">
+      <table class="info-table">
+        <tr><th>会社名</th><td>XEN合同会社</td></tr>
+        <tr><th>事業内容</th><td>共通技術基盤「Komiru」の開発・運営<br>求人LP自動生成サービス「ツクル求人」の開発・運営<br>店舗集客LPサービス「ミセル」の開発・運営</td></tr>
+        <tr><th>所在地</th><td>長野県長野市</td></tr>
+      </table>
+      <p style="font-size:12.5px;color:var(--text-on-light-soft);margin-top:18px;">※ 掲載情報は今後の事業展開に応じて随時更新いたします。</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="section--deep pad-l" id="contact">
+  <div class="wrap">
+    <div class="split reveal">
+      <div class="split-text">
+        <span class="eyebrow" style="color:var(--indigo-deep)">CONTACT</span>
+        <h3 style="margin-top:18px;">お問い合わせ</h3>
+        <p>プロダクトの導入、取材・パートナーシップに関するご相談など、お気軽にお問い合わせください。担当者より折り返しご連絡いたします。</p>
+        <ul class="feature-list">
+          <li><span class="check" style="background:var(--teal)">✓</span>プロダクトの導入・プランに関するご相談</li>
+          <li><span class="check" style="background:var(--teal)">✓</span>取材・メディア掲載に関するお問い合わせ</li>
+          <li><span class="check" style="background:var(--teal)">✓</span>採用・パートナーシップに関するご連絡</li>
+        </ul>
+      </div>
+      <div>
+        <form class="card" id="contact-form">
+          <div class="form-field">
+            <label for="f-name">お名前</label>
+            <input type="text" id="f-name" name="name" required placeholder="山田 太郎">
+          </div>
+          <div class="form-field">
+            <label for="f-company">会社名・店舗名</label>
+            <input type="text" id="f-company" name="company" placeholder="任意">
+          </div>
+          <div class="form-field">
+            <label for="f-email">メールアドレス</label>
+            <input type="email" id="f-email" name="email" required placeholder="you@example.com">
+          </div>
+          <div class="form-field">
+            <label for="f-subject">お問い合わせ種別</label>
+            <select id="f-subject" name="subject">
+              <option>プロダクト導入のご相談</option>
+              <option>取材・メディア掲載について</option>
+              <option>採用・パートナーシップについて</option>
+              <option>その他</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label for="f-message">お問い合わせ内容</label>
+            <textarea id="f-message" name="message" required placeholder="お問い合わせ内容をご記入ください"></textarea>
+          </div>
+          <button class="btn btn-teal" type="submit" id="submit-btn" style="width:100%;padding:14px;justify-content:center;">送信する</button>
+          <p id="form-note" style="font-size:12px;color:var(--text-on-light-soft);margin-top:12px;text-align:center;"></p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a class="gnav-logo" href="index.html"><span class="mark">X</span>XEN</a>
+        <p>共通技術基盤「Komiru」を中核に、現場の課題を解くプロダクトを開発・運営するスタートアップです。</p>
+      </div>
+      <div class="footer-col">
+        <h4>プロダクト</h4>
+        <ul>
+          <li><a href="products.html#komiru">Komiru（共通基盤）</a></li>
+          <li><a href="products.html#tsukuru">ツクル求人</a></li>
+          <li><a href="products.html#miseru">ミセル</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>会社</h4>
+        <ul>
+          <li><a href="company.html">会社概要</a></li>
+          <li><a href="company.html#mission">ミッション</a></li>
+          <li><a href="company.html#contact">お問い合わせ</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>サイト</h4>
+        <ul>
+          <li><a href="index.html">トップ</a></li>
+          <li><a href="products.html">プロダクト</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 XEN合同会社</span>
+      <span>Powered by Komiru</span>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+<script>
+  // ── Supabase連携設定 ──
+  // komiruプロジェクトのURLとanon keyに差し替えてください
+  // Supabaseダッシュボード → Project Settings → API から取得
+  const SUPABASE_URL = 'https://YOUR-PROJECT-REF.supabase.co';
+  const SUPABASE_ANON_KEY = 'YOUR-ANON-PUBLIC-KEY';
+
+  const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  const form = document.getElementById('contact-form');
+  const note = document.getElementById('form-note');
+  const submitBtn = document.getElementById('submit-btn');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const payload = {
+      name: document.getElementById('f-name').value.trim(),
+      company: document.getElementById('f-company').value.trim() || null,
+      email: document.getElementById('f-email').value.trim(),
+      subject: document.getElementById('f-subject').value,
+      message: document.getElementById('f-message').value.trim(),
+    };
+
+    if (!payload.name || !payload.email || !payload.message) {
+      note.textContent = '必須項目をご確認ください。';
+      note.style.color = 'var(--terra-deep)';
+      return;
+    }
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = '送信中…';
+    note.textContent = '';
+
+    const { error } = await supabase.from('contact_inquiries').insert([payload]);
+
+    submitBtn.disabled = false;
+    submitBtn.textContent = '送信する';
+
+    if (error) {
+      console.error(error);
+      note.textContent = '送信に失敗しました。時間をおいて再度お試しください。';
+      note.style.color = 'var(--terra-deep)';
+      return;
+    }
+
+    note.textContent = 'お問い合わせを受け付けました。担当者より折り返しご連絡いたします。';
+    note.style.color = 'var(--teal-deep)';
+    form.reset();
+  });
+</script>
+</body>
+</html>
