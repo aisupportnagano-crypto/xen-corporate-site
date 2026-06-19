@@ -941,16 +941,18 @@ section { position: relative; }
 .holo-point.hp7 { bottom: 0; left: 0;  transform: translate3d(0, 0, -40px); }
 .holo-point.hp8 { top: 50%; left: 0;   transform: translate3d(0, -50%, -40px); }
 
-/* ホバー時：外側へ展開しながら手前に浮き上がる */
-.mock-hologram:hover .holo-point { opacity: 1; }
-.mock-hologram:hover .hp1 { transform: translate3d(-26px, -26px, 50px) scale(1.3); }
-.mock-hologram:hover .hp2 { transform: translate3d(-50%, -26px, 50px) scale(1.3); }
-.mock-hologram:hover .hp3 { transform: translate3d(26px, -26px, 50px) scale(1.3); }
-.mock-hologram:hover .hp4 { transform: translate3d(26px, -50%, 50px) scale(1.3); }
-.mock-hologram:hover .hp5 { transform: translate3d(26px, 26px, 50px) scale(1.3); }
-.mock-hologram:hover .hp6 { transform: translate3d(-50%, 26px, 50px) scale(1.3); }
-.mock-hologram:hover .hp7 { transform: translate3d(-26px, 26px, 50px) scale(1.3); }
-.mock-hologram:hover .hp8 { transform: translate3d(-26px, -50%, 50px) scale(1.3); }
+/* ホバー時（PC）／ .holo-play クラス付与時（スマホ：スクロールで画面に入ったら自動再生）：
+   外側へ展開しながら手前に浮き上がる */
+.mock-hologram:hover .holo-point,
+.mock-hologram.holo-play .holo-point { opacity: 1; }
+.mock-hologram:hover .hp1, .mock-hologram.holo-play .hp1 { transform: translate3d(-26px, -26px, 50px) scale(1.3); }
+.mock-hologram:hover .hp2, .mock-hologram.holo-play .hp2 { transform: translate3d(-50%, -26px, 50px) scale(1.3); }
+.mock-hologram:hover .hp3, .mock-hologram.holo-play .hp3 { transform: translate3d(26px, -26px, 50px) scale(1.3); }
+.mock-hologram:hover .hp4, .mock-hologram.holo-play .hp4 { transform: translate3d(26px, -50%, 50px) scale(1.3); }
+.mock-hologram:hover .hp5, .mock-hologram.holo-play .hp5 { transform: translate3d(26px, 26px, 50px) scale(1.3); }
+.mock-hologram:hover .hp6, .mock-hologram.holo-play .hp6 { transform: translate3d(-50%, 26px, 50px) scale(1.3); }
+.mock-hologram:hover .hp7, .mock-hologram.holo-play .hp7 { transform: translate3d(-26px, 26px, 50px) scale(1.3); }
+.mock-hologram:hover .hp8, .mock-hologram.holo-play .hp8 { transform: translate3d(-26px, -50%, 50px) scale(1.3); }
 
 /* サービスアイコン（Komiru関連：AI生成・地図・接客・改善ループ） */
 .holo-services {
@@ -979,16 +981,17 @@ section { position: relative; }
   box-shadow: 0 0 0 rgba(20,184,166,0);
   backdrop-filter: blur(4px);
 }
-.mock-hologram:hover .holo-service {
+.mock-hologram:hover .holo-service,
+.mock-hologram.holo-play .holo-service {
   opacity: 1;
   transform: translateZ(40px) scale(1);
   border-color: var(--teal);
   box-shadow: 0 4px 18px var(--teal-glow);
 }
-.mock-hologram:hover .holo-service:nth-child(1) { transition-delay: .08s; }
-.mock-hologram:hover .holo-service:nth-child(2) { transition-delay: .16s; }
-.mock-hologram:hover .holo-service:nth-child(3) { transition-delay: .24s; }
-.mock-hologram:hover .holo-service:nth-child(4) { transition-delay: .32s; }
+.mock-hologram:hover .holo-service:nth-child(1), .mock-hologram.holo-play .holo-service:nth-child(1) { transition-delay: .08s; }
+.mock-hologram:hover .holo-service:nth-child(2), .mock-hologram.holo-play .holo-service:nth-child(2) { transition-delay: .16s; }
+.mock-hologram:hover .holo-service:nth-child(3), .mock-hologram.holo-play .holo-service:nth-child(3) { transition-delay: .24s; }
+.mock-hologram:hover .holo-service:nth-child(4), .mock-hologram.holo-play .holo-service:nth-child(4) { transition-delay: .32s; }
 
 /* ホログラムタイピングテキスト */
 .holo-typing-wrap {
@@ -1014,7 +1017,8 @@ section { position: relative; }
   border-right: 2px solid transparent;
   text-shadow: 0 0 8px var(--teal-glow);
 }
-.mock-hologram:hover .holo-typing {
+.mock-hologram:hover .holo-typing,
+.mock-hologram.holo-play .holo-typing {
   animation:
     holo-typing-anim 1.6s steps(24, end) forwards .5s,
     holo-blink-caret .7s step-end infinite;
@@ -1033,11 +1037,6 @@ section { position: relative; }
     transition: none !important;
     animation: none !important;
   }
-}
-
-/* タッチ端末（ホバー不可）では演出自体を出さない */
-@media (hover: none) {
-  .holo-point, .holo-services, .holo-typing-wrap { display: none; }
 }
 
 /* ============================================================
