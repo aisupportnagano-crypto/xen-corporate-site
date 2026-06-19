@@ -125,14 +125,17 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // ── 製品モックのスクロール連動チルト ──
+  // ── 製品モックのスクロール連動チルト（＋ホバー時はマウス追従チルトに切り替え） ──
   if (!prefersReducedMotion) {
     const tilts = document.querySelectorAll('.mock-tilt');
     if (tilts.length) {
+      const hovering = new WeakSet();
+
       let tiltTicking = false;
       const onTilt = () => {
         const vh = window.innerHeight;
         tilts.forEach(el => {
+          if (hovering.has(el)) return; // ホバー中はスクロール側で上書きしない
           const rect = el.getBoundingClientRect();
           const center = rect.top + rect.height / 2;
           const ratio = Math.max(-1, Math.min(1, (center - vh / 2) / (vh / 2)));
@@ -148,6 +151,29 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       }, { passive: true });
       onTilt();
+
+      // ホバー中はマウス位置に応じた2軸チルト（ホログラムカード演出）
+      tilts.forEach(el => {
+        if (!el.classList.contains('mock-hologram')) return;
+
+        el.addEventListener('mouseenter', () => hovering.add(el));
+
+        el.addEventListener('mousemove', (e) => {
+          const rect = el.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          const centerX = rect.width / 2;
+          const centerY = rect.height / 2;
+          const rotateX = ((y - centerY) / centerY) * -8;
+          const rotateY = ((x - centerX) / centerX) * 8;
+          el.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+        });
+
+        el.addEventListener('mouseleave', () => {
+          hovering.delete(el);
+          el.style.transform = 'rotateX(0deg) rotateY(0deg)';
+        });
+      });
     }
   }
 
