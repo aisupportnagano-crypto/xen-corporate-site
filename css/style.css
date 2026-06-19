@@ -943,3 +943,54 @@ section { position: relative; }
   font-weight: 700;
   color: var(--text-on-dark);
 }
+
+/* ============================================================
+   Scroll-driven text fill ("WHY KOMIRU" セクション専用)
+   見出し・リード文が、スクロール位置に応じて
+   薄いグレー → 通常の文字色 へ塗りつぶされていく。
+   下線演出はなし、色の変化のみ。
+   animation-timeline: scroll() 非対応ブラウザでは
+   最初から通常表示にフォールバックする。
+   ============================================================ */
+
+.scroll-fill-text {
+  /* フォールバック（非対応ブラウザ・reduced motion時）は通常表示 */
+  color: inherit;
+}
+
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .scroll-fill-text {
+      background-image: linear-gradient(
+        var(--fill-to, var(--text-on-light)),
+        var(--fill-to, var(--text-on-light))
+      );
+      background-repeat: no-repeat;
+      background-size: 0% 100%;
+      background-position: 0 0;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: var(--fill-from, var(--paper-line));
+      animation: scroll-fill-sweep linear both;
+      animation-timeline: view();
+      animation-range: entry 10% cover 55%;
+    }
+
+    h2.scroll-fill-text {
+      --fill-from: #D8D6CE;
+      --fill-to: var(--text-on-light);
+    }
+
+    .scroll-fill-text--lead {
+      --fill-from: #D8D6CE;
+      --fill-to: var(--text-on-light-soft);
+    }
+
+    @keyframes scroll-fill-sweep {
+      to {
+        background-size: 100% 100%;
+        color: var(--fill-to);
+      }
+    }
+  }
+}
