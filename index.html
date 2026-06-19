@@ -47,14 +47,13 @@
 
 <!-- HERO -->
 <header class="hero">
+  <canvas class="hero-mesh-canvas" aria-hidden="true"></canvas>
   <div class="hero-grid" aria-hidden="true"></div>
+  <canvas id="particle-canvas" aria-hidden="true"></canvas>
+  <div class="hero-mouse-glow" aria-hidden="true"></div>
   <div class="wrap hero-inner">
     <div class="eyebrow">XEN合同会社 — Powered by Komiru</div>
-    <h1 class="reveal is-visible">
-      ひとつの技術基盤から、<br>
-      現場ごとの<span class="accent-teal">「コミる」</span>を<br>
-      <span class="accent-terra">つくりつづける。</span>
-    </h1>
+    <h1 data-split-text>ひとつの技術基盤から、<br>現場ごとの<span class="accent-teal">「コミる」</span>を<br><span class="accent-terra">つくりつづける。</span></h1>
     <p class="hero-sub reveal is-visible" style="transition-delay:.1s">
       XEN合同会社は、共通技術基盤「Komiru（コミル）」を中核に、求人領域の<strong style="color:var(--text-on-dark)">ツクル求人</strong>、店舗集客領域の<strong style="color:var(--text-on-dark)">ミセル</strong>を開発・運営するスタートアップです。一つのコアを磨き続けることで、複数の現場課題を同時に解決しています。
     </p>
@@ -288,5 +287,6 @@
 </footer>
 
 <script src="js/main.js"></script>
+<script src="js/particle-hero.js"></script>
 </body>
 </html>
