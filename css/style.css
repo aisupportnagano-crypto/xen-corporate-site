@@ -166,10 +166,15 @@ section { position: relative; }
   position: fixed;
   top: 0; left: 0; right: 0;
   z-index: 200;
-  background: rgba(10,10,12,.72);
+  background: rgba(10,10,12,.55);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border-bottom: 1px solid var(--ink-line);
+  border-bottom: 1px solid transparent;
+  transition: background .3s ease, border-color .3s ease;
+}
+.gnav.scrolled {
+  background: rgba(10,10,12,.86);
+  border-bottom-color: var(--ink-line);
 }
 .gnav-inner {
   max-width: var(--wrap);
@@ -696,6 +701,75 @@ section { position: relative; }
 .reveal.is-visible {
   opacity: 1;
   transform: translateY(0);
+}
+
+/* ============================================================
+   Scroll progress bar
+   ============================================================ */
+
+.scroll-progress {
+  position: fixed;
+  top: 0; left: 0;
+  height: 2px;
+  width: 0%;
+  background: linear-gradient(90deg, var(--teal), var(--indigo), var(--terra));
+  z-index: 999;
+  transition: width .08s linear;
+}
+
+/* ============================================================
+   Parallax layers (hero)
+   ============================================================ */
+
+.hero { will-change: transform; }
+.hero-grid, .hero::before, .hero::after { will-change: transform; }
+.parallax-layer {
+  transition: transform .05s linear;
+}
+
+/* ============================================================
+   Count-up stat numbers
+   ============================================================ */
+
+.stat-num[data-count] {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ============================================================
+   Mock tilt on scroll
+   ============================================================ */
+
+.mock-tilt-wrap {
+  perspective: 1400px;
+}
+.mock-tilt {
+  transform-style: preserve-3d;
+  transition: transform .15s ease-out;
+  will-change: transform;
+}
+
+/* ============================================================
+   Stagger children (cards, lists) — used with .reveal-stagger
+   ============================================================ */
+
+.reveal-stagger > * {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity .6s ease, transform .6s ease;
+}
+.reveal-stagger.is-visible > * {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-stagger.is-visible > *:nth-child(1) { transition-delay: 0s; }
+.reveal-stagger.is-visible > *:nth-child(2) { transition-delay: .08s; }
+.reveal-stagger.is-visible > *:nth-child(3) { transition-delay: .16s; }
+.reveal-stagger.is-visible > *:nth-child(4) { transition-delay: .24s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-progress { display: none; }
+  .mock-tilt { transform: none !important; transition: none; }
+  .parallax-layer { transform: none !important; }
 }
 
 .mobile-menu {
