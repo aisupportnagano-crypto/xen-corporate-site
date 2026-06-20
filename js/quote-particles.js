@@ -10,7 +10,7 @@
   const canvas = document.getElementById('quote-particle-canvas');
   if (!canvas) return;
 
-  const wrap = canvas.closest('.quote-block');
+  const wrap = canvas.closest('section');
   if (!wrap) return;
 
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -51,10 +51,10 @@
     canvas.style.height = height + 'px';
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-    // 横幅に応じて格子の密度を調整（スマホは軽量に）
+    // 横幅に応じて格子の密度を調整（スマホは軽量に）/ セクション全体に敷くため高密度
     const isSmall = width < 560;
-    cols = isSmall ? 10 : 16;
-    rows = isSmall ? 5 : 7;
+    cols = isSmall ? 26 : 46;
+    rows = isSmall ? 14 : 24;
 
     dots = [];
     for (let ix = 0; ix < cols; ix++) {
@@ -80,10 +80,10 @@
              + camY * (1 - depthRatio * 0.7) * 0.4;
 
     const c = colorAt(d.ix / (cols - 1 || 1));
-    const alpha = Math.max(0.5 - depthRatio * 0.42, 0.06);
-    const pulse = (Math.sin((d.ix + t * 14) * 0.45) + 1) * 0.9
-                + (Math.sin((d.iz + t * 18) * 0.6) + 1) * 0.9;
-    const radius = Math.max((1.5 + pulse) * scale, 0.6);
+    const alpha = Math.max(0.45 - depthRatio * 0.36, 0.05);
+    const pulse = (Math.sin((d.ix + t * 14) * 0.45) + 1) * 0.55
+                + (Math.sin((d.iz + t * 18) * 0.6) + 1) * 0.55;
+    const radius = Math.max((0.8 + pulse) * scale, 0.45);
 
     return { px, py, c, alpha, radius };
   }
