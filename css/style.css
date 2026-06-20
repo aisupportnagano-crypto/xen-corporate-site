@@ -6,15 +6,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700;900&family=Noto+Sans+JP:wght@400;500;600;700;900&display=swap');
 
-/* カードのグロー縁取り回転に使う角度カスタムプロパティ。
-   @property で型を宣言することで、角度が補間（なめらかに回転）できるようになる。
-   非対応ブラウザでは単に未使用の変数として無視される（フォールバックは下記参照）。 */
-@property --rotate {
-  syntax: "<angle>";
-  initial-value: 0deg;
-  inherits: false;
-}
-
 :root {
   /* ── Core palette ── */
   --ink:        #0A0A0C;   /* dark hero bg */
@@ -696,98 +687,34 @@ section { position: relative; }
 .icon-indigo { background: rgba(107,95,255,.12); color: var(--indigo-deep); }
 
 /* ============================================================
-   Card glow border（カードごとに色を変えたネオン縁取り＋浮遊シャドウ）
+   Card glow shadow（カードごとに色を変えた立体感シャドウ）
    ホバー時（PC）／.glow-play クラス付与時（スマホ：スクロールで
-   画面に入ったら一度だけ自動再生）に、カードの縁を単色グラデーションの
-   ネオン光が回転しながら周回し、外側にふんわり拡がる影で
-   カードが浮いているように見せる。カード表面・内部は一切色づかない。
+   画面に入ったら一度だけ表示）に、カードがふわっと浮き上がり、
+   下にカードごとの色がついた柔らかい影が広がる。色は動かさず静的。
    ============================================================ */
 
 .card-glow {
   position: relative;
-  z-index: 0;
-  overflow: visible;
-  isolation: isolate;
+  transition: transform .35s ease, box-shadow .35s ease;
 }
 
-/* カードごとの単色グラデーション（明→暗の同系色2トーン） */
-.card-glow[data-glow="indigo"] { --glow-a: #8B7FFF; --glow-b: #4B3FE0; }
-.card-glow[data-glow="teal"]   { --glow-a: #5EE8D5; --glow-b: #0D9488; }
-.card-glow[data-glow="terra"]  { --glow-a: #FF9B7E; --glow-b: #E2552F; }
+/* カードごとの単色（影の色として使う） */
+.card-glow[data-glow="indigo"] { --glow-color: rgba(107, 95, 255, .35); }
+.card-glow[data-glow="teal"]   { --glow-color: rgba(20, 184, 166, .35); }
+.card-glow[data-glow="terra"]  { --glow-color: rgba(255, 107, 74, .35); }
 
-/* 縁取りのネオン線（実要素）：padding + mask で「枠線の形」だけを
-   確実にくり抜く。実要素にすることで疑似要素より mask の挙動が安定する。 */
-.glow-ring {
-  display: block;
-  position: absolute;
-  inset: -1.5px;
-  z-index: 1;
-  border-radius: calc(var(--radius-m) + 1.5px);
-  padding: 1.5px;
-  background-image: conic-gradient(from var(--rotate, 0deg), var(--glow-a), var(--glow-b), var(--glow-a));
-  -webkit-mask:
-    linear-gradient(#000 0 0) content-box,
-    linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-  mask:
-    linear-gradient(#000 0 0) content-box,
-    linear-gradient(#000 0 0);
-  mask-composite: exclude;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity .6s ease;
-  animation: card-glow-spin 3.2s linear infinite;
-  animation-play-state: paused;
-}
-
-/* 浮遊感のある外側グロー（疑似要素）：カードの輪郭から十分外側に離して
-   大きくぼかすことで、カード本体には重ならず「下に浮かぶ光」として見せる。 */
-.card-glow::after {
-  content: "";
-  position: absolute;
-  inset: -14px;
-  z-index: -1;
-  border-radius: calc(var(--radius-m) + 14px);
-  background-image: conic-gradient(from var(--rotate, 0deg), var(--glow-a), var(--glow-b), var(--glow-a));
-  filter: blur(30px);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity .6s ease;
-  animation: card-glow-spin 3.2s linear infinite;
-  animation-play-state: paused;
-}
-
-.card-glow:hover .glow-ring,
-.card-glow:hover::after,
-.card-glow.glow-play .glow-ring,
-.card-glow.glow-play::after {
-  opacity: 1;
-  animation-play-state: running;
-}
-.card-glow:hover .glow-ring,
-.card-glow.glow-play .glow-ring {
-  opacity: .9;
-}
-.card-glow:hover::after,
-.card-glow.glow-play::after {
-  opacity: .55;
-}
-
-/* ホバー中はカード本体も少し浮き上がらせて、影との立体感を強める */
 .card-glow:hover,
 .card-glow.glow-play {
-  transform: translateY(-6px);
-  box-shadow: 0 24px 48px rgba(20,20,25,.12);
-}
-
-@keyframes card-glow-spin {
-  0%   { --rotate: 0deg; }
-  100% { --rotate: 360deg; }
+  transform: translateY(-8px);
+  box-shadow:
+    0 4px 10px rgba(20,20,25,.06),
+    0 22px 40px -8px var(--glow-color),
+    0 10px 20px -4px rgba(20,20,25,.08);
+  border-color: transparent;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .card-glow::before, .card-glow::after {
-    animation: none !important;
+  .card-glow {
     transition: none !important;
   }
 }
