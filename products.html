@@ -8,18 +8,13 @@
 <link rel="stylesheet" href="css/style.css">
 <style>
   /* ============================================================
-     PRODUCTS ページヒーロー右側の Interactive Text Spotlight
-     (css/style.css 本体は無変更。サイト本体の変数名 --radius-l /
-     --f-mono に合わせて元コードの変数参照のみ修正している)
+     PRODUCTS ページヒーロー Interactive Text Spotlight
+     (css/style.css 本体は無変更。見出し・リード文の下の余白に
+     画面全幅で配置。マスクやぼかしは使わず、素材そのままの黒背景)
      ============================================================ */
   .ph-spotlight-wrap {
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-    opacity: .58;
-    pointer-events: auto;
-    -webkit-mask-image: linear-gradient(124deg, transparent 6%, transparent 30%, rgba(0,0,0,.4) 52%, black 82%);
-    mask-image: linear-gradient(124deg, transparent 6%, transparent 30%, rgba(0,0,0,.4) 52%, black 82%);
+    width: 100%;
+    margin-top: 56px;
   }
 </style>
 </head>
@@ -69,7 +64,7 @@
 
   <div class="ph-spotlight-wrap" aria-hidden="true">
     <style>
-    .xen-spot{position:relative;width:100%;height:100%;border-radius:0;overflow:hidden;background:#07060d;font-family:var(--f-mono);cursor:none;--mx:-999px;--my:-999px;}
+    .xen-spot{position:relative;width:100%;aspect-ratio:2/1;max-height:380px;border-radius:var(--radius-l);overflow:hidden;background:#07060d;font-family:var(--f-mono);cursor:none;--mx:-999px;--my:-999px;}
     .xen-text-layer{position:absolute;inset:0;display:flex;flex-wrap:wrap;align-content:flex-start;gap:6px 14px;padding:28px;font-size:12px;letter-spacing:.5px;line-height:1.8;pointer-events:none;user-select:none;}
     .xen-text-dim{color:rgba(124,109,224,.16);}
     .xen-text-bright{color:#9fe1cb;-webkit-mask-image:radial-gradient(circle 150px at var(--mx) var(--my),black 0%,black 30%,transparent 72%);mask-image:radial-gradient(circle 150px at var(--mx) var(--my),black 0%,black 30%,transparent 72%);}
@@ -86,12 +81,12 @@
       <div class="xen-text-layer xen-text-dim" id="xenDim"></div>
       <div class="xen-text-layer xen-text-bright" id="xenBright"></div>
       <div class="xen-cursor-ring" id="xenRing"></div>
-      <div class="xen-tag brand" style="top:87%;right:30%;">Komiru</div>
-      <div class="xen-tag" style="top:87%;right:5%;">AI</div>
-      <div class="xen-tag" style="top:95%;right:42%;">LLM</div>
-      <div class="xen-tag" style="top:87%;right:55%;">JSON</div>
-      <div class="xen-tag" style="top:95%;right:18%;">AIO</div>
-      <div class="xen-tag" style="top:95%;right:64%;">API</div>
+      <div class="xen-tag brand" style="top:10%;left:6%;">Komiru</div>
+      <div class="xen-tag" style="top:14%;right:8%;">AI</div>
+      <div class="xen-tag" style="bottom:12%;left:11%;">LLM</div>
+      <div class="xen-tag" style="bottom:18%;right:14%;">JSON</div>
+      <div class="xen-tag" style="top:46%;left:42%;">AIO</div>
+      <div class="xen-tag" style="top:62%;right:30%;">API</div>
     </div>
     <script>
     (function(){
