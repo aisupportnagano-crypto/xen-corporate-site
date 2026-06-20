@@ -6,17 +6,6 @@
 <title>プロダクト — 合同会社XEN</title>
 <meta name="description" content="情報発信のコミル、求人LP自動生成のツクル、ホームページビルダーのミセル。合同会社XENが開発・運営するプロダクト一覧。">
 <link rel="stylesheet" href="css/style.css">
-<style>
-  /* ============================================================
-     PRODUCTS ページヒーロー Interactive Text Spotlight
-     (css/style.css 本体は無変更。見出し・リード文の下の余白に
-     画面全幅で配置。マスクやぼかしは使わず、素材そのままの黒背景)
-     ============================================================ */
-  .ph-spotlight-wrap {
-    width: 100%;
-    margin-top: 56px;
-  }
-</style>
 </head>
 <body>
 
@@ -60,95 +49,6 @@
     <div class="eyebrow">PRODUCTS</div>
     <h1>三つのプロダクトで、<br>現場の「伝わらない」に向き合う。</h1>
     <p>情報発信の「コミル」、求人領域の「ツクル」、集客領域の「ミセル」。それぞれ独立したプロダクトとして、現場の言葉に合わせた顔を持っています。</p>
-  </div>
-
-  <div class="ph-spotlight-wrap" aria-hidden="true">
-    <style>
-    .xen-spot{position:relative;width:100%;aspect-ratio:2/1;max-height:380px;border-radius:var(--radius-l);overflow:hidden;background:#07060d;font-family:var(--f-mono);cursor:none;--mx:-999px;--my:-999px;}
-    .xen-text-layer{position:absolute;inset:0;display:flex;flex-wrap:wrap;align-content:flex-start;gap:6px 14px;padding:28px;font-size:12px;letter-spacing:.5px;line-height:1.8;pointer-events:none;user-select:none;}
-    .xen-text-dim{color:rgba(124,109,224,.16);}
-    .xen-text-bright{color:#9fe1cb;-webkit-mask-image:radial-gradient(circle 150px at var(--mx) var(--my),black 0%,black 30%,transparent 72%);mask-image:radial-gradient(circle 150px at var(--mx) var(--my),black 0%,black 30%,transparent 72%);}
-    .xen-text-bright span.kw{color:#b9aef5;}
-    .xen-text-bright span.brand{color:#5dcaa5;}
-    .xen-text-dim span.brand{color:rgba(93,202,165,.22);}
-    .xen-cursor-ring{position:absolute;width:26px;height:26px;border:1px solid rgba(159,225,203,.7);border-radius:50%;pointer-events:none;transform:translate(-999px,-999px);transition:transform .08s ease-out,opacity .2s;opacity:0;z-index:5;}
-    .xen-tag{position:absolute;display:flex;align-items:center;padding:6px 12px;border-radius:999px;background:rgba(20,18,38,.72);border:0.5px solid rgba(124,109,224,.45);backdrop-filter:blur(6px);font-size:12px;color:#cfc9f7;z-index:4;transition:transform .15s ease-out,box-shadow .15s ease-out,border-color .15s ease-out;white-space:nowrap;}
-    .xen-tag.active{border-color:rgba(159,225,203,.95);box-shadow:0 0 16px 2px rgba(93,202,165,.45);}
-    .xen-tag.brand{border-color:rgba(93,202,165,.6);color:#cdf3e6;}
-    .xen-tag.brand.active{box-shadow:0 0 18px 3px rgba(93,202,165,.6);}
-    </style>
-    <div class="xen-spot" id="xenSpot">
-      <div class="xen-text-layer xen-text-dim" id="xenDim"></div>
-      <div class="xen-text-layer xen-text-bright" id="xenBright"></div>
-      <div class="xen-cursor-ring" id="xenRing"></div>
-      <div class="xen-tag brand" style="top:10%;left:6%;">Komiru</div>
-      <div class="xen-tag" style="top:14%;right:8%;">AI</div>
-      <div class="xen-tag" style="bottom:12%;left:11%;">LLM</div>
-      <div class="xen-tag" style="bottom:18%;right:14%;">JSON</div>
-      <div class="xen-tag" style="top:46%;left:42%;">AIO</div>
-      <div class="xen-tag" style="top:62%;right:30%;">API</div>
-    </div>
-    <script>
-    (function(){
-    var scene=document.getElementById('xenSpot');
-    var dim=document.getElementById('xenDim');
-    var bright=document.getElementById('xenBright');
-    var ring=document.getElementById('xenRing');
-    var words=["API","CLOUD","REALTIME","SECURE","SCALE","DEPLOY","AI","LLM","AIO","JSON","Komiru","DATA","UPTIME","LATENCY","PIPELINE","INSIGHT","AUTOMATE","ENCRYPT","MONITOR","ANALYTICS","NETWORK","EDGE","SAAS","DEVOPS","CI/CD","WEBHOOK","TOKEN","CACHE","QUERY","STREAM","NODE","CLUSTER","ROUTE","SCHEMA","INDEX","BUILD","RELEASE","METRIC","ALERT","SYNC","QUEUE","WORKER"];
-    var brandSet={"LLM":1,"AIO":1,"AI":1,"JSON":1,"Komiru":1};
-    var html='';
-    for(var i=0;i<5;i++){
-    for(var j=0;j<words.length;j++){
-    var w=words[j];
-    var cls=brandSet[w]?'brand':(((i*words.length+j)%4===0)?'kw':'');
-    html+='<span class="'+cls+'">'+w+'</span>';
-    }
-    }
-    dim.innerHTML=html;
-    bright.innerHTML=html;
-    var tagEls=Array.prototype.slice.call(scene.querySelectorAll('.xen-tag'));
-    var tags=[];
-    function cacheTagRects(){
-    var sceneRect=scene.getBoundingClientRect();
-    tags=tagEls.map(function(el){
-    var r=el.getBoundingClientRect();
-    return{el:el,left:r.left-sceneRect.left,top:r.top-sceneRect.top,width:r.width,height:r.height};
-    });
-    }
-    cacheTagRects();
-    window.addEventListener('resize',cacheTagRects);
-    scene.addEventListener('mousemove',function(e){
-    var r=scene.getBoundingClientRect();
-    var x=e.clientX-r.left, y=e.clientY-r.top;
-    scene.style.setProperty('--mx',x+'px');
-    scene.style.setProperty('--my',y+'px');
-    ring.style.transform='translate('+(x-13)+'px,'+(y-13)+'px)';
-    ring.style.opacity='1';
-    tags.forEach(function(t){
-    var cx=t.left+t.width/2, cy=t.top+t.height/2;
-    var dx=x-cx, dy=y-cy;
-    var dist=Math.sqrt(dx*dx+dy*dy);
-    var radius=90;
-    if(dist<radius){
-    var pull=(1-dist/radius)*10;
-    var nx=dist===0?0:(dx/dist)*pull;
-    var ny=dist===0?0:(dy/dist)*pull;
-    t.el.style.transform='translate('+nx.toFixed(1)+'px,'+ny.toFixed(1)+'px) scale(1.08)';
-    t.el.classList.add('active');
-    }else{
-    t.el.style.transform='translate(0,0) scale(1)';
-    t.el.classList.remove('active');
-    }
-    });
-    });
-    scene.addEventListener('mouseleave',function(){
-    scene.style.setProperty('--mx','-999px');
-    scene.style.setProperty('--my','-999px');
-    ring.style.opacity='0';
-    tags.forEach(function(t){t.el.style.transform='translate(0,0) scale(1)';t.el.classList.remove('active');});
-    });
-    })();
-    </script>
   </div>
 </header>
 
