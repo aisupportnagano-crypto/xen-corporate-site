@@ -426,28 +426,49 @@ section { position: relative; }
 .hero h1 .accent-terra { color: var(--terra); }
 .hero h1 .accent-indigo { color: var(--indigo); }
 
-/* 文字分割アニメーション：1文字ずつ <span class="ch"> に包む */
+/* 文字分割アニメーション：1文字ずつ <span class="ch"> に包み、
+   タイプライターのように左から順番に瞬間表示していく。
+   全文字が表示し終わったら、末尾にカーソルが点滅し続ける。 */
 .split-line {
   display: block;
-  overflow: hidden;
   line-height: 1.35;
 }
 .split-line .ch {
   display: inline-block;
-  transform: translateY(110%) rotate(6deg);
   opacity: 0;
-  animation: chRise .7s cubic-bezier(.2,.8,.2,1) forwards;
+  animation: chTypeIn .01s steps(1) forwards;
   animation-delay: var(--d, 0s);
 }
 .split-line .ch.sp { width: .3em; }
-@keyframes chRise {
-  to { transform: translateY(0) rotate(0deg); opacity: 1; }
+@keyframes chTypeIn {
+  to { opacity: 1; }
 }
+
+/* タイピングカーソル：見出し全体の末尾に1つだけ置く想定（JS側で挿入） */
+.split-line .type-cursor {
+  display: inline-block;
+  width: .06em;
+  margin-left: .04em;
+  background: currentColor;
+  opacity: 0;
+  animation:
+    chTypeIn .01s steps(1) forwards var(--cursor-d, 0s),
+    cursorBlink .9s step-end infinite var(--cursor-d, 0s);
+  vertical-align: -0.08em;
+  height: 0.85em;
+}
+@keyframes cursorBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .split-line .ch {
     animation: none;
-    transform: none;
     opacity: 1;
+  }
+  .split-line .type-cursor {
+    display: none;
   }
 }
 
