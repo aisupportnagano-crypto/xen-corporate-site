@@ -49,6 +49,25 @@
     border-color: var(--teal); outline: none;
   }
   .form-field textarea { resize: vertical; min-height: 130px; }
+
+  /* ============================================================
+     ヒーロー見出し インタラクション(雷・焦げ・煙)
+     アップロードされた実装の数値は一切変更せず、色のみサイトの
+     ブランドカラーに合わせている。
+     ============================================================ */
+  .page-hero h1 .ch{display:inline-block;transition:transform .25s cubic-bezier(.2,.8,.3,1);will-change:transform;}
+  .page-hero h1 .ch.active{transition:transform .25s cubic-bezier(.2,.8,.3,1), color .2s ease, text-shadow .2s ease;color:#5EEAD4;text-shadow:0 0 14px rgba(20,184,166,.5);}
+  .page-hero h1 .ch.alt.active{color:#B4ACFF;text-shadow:0 0 14px rgba(107,95,255,.5);}
+  @keyframes xenScorch{
+    0%{color:#fff7e8;text-shadow:0 0 10px rgba(255,255,255,.95), 0 0 22px rgba(255,170,70,.9);}
+    14%{color:#3a1608;text-shadow:0 0 7px rgba(255,140,50,.9), 0 0 16px rgba(255,60,15,.65);}
+    100%{color:#241008;text-shadow:0 0 4px rgba(255,110,40,.45), 0 0 9px rgba(200,40,10,.3);}
+  }
+  .page-hero h1 .ch.scorched{animation-name:xenScorch;animation-timing-function:ease-out;animation-fill-mode:forwards;}
+  #xenSpark{position:absolute;inset:0;pointer-events:none;z-index:5;}
+  @media (prefers-reduced-motion: reduce){
+    .page-hero h1 .ch{transition:none;}
+  }
 </style>
 </head>
 <body>
@@ -88,10 +107,11 @@
 </div>
 
 <!-- PAGE HERO -->
-<header class="page-hero">
+<header class="page-hero" id="hero">
+  <canvas id="xenSpark"></canvas>
   <div class="wrap">
     <div class="eyebrow">COMPANY</div>
-    <h1>現場の「コミる」を、<br>技術でつくり続ける。</h1>
+    <h1 id="xenHeading">現場の「コミる」を、<br>技術でつくり続ける。</h1>
     <p>合同会社XENは、情報発信の「コミル」、求人LPの「ツクル」、ホームページビルダーの「ミセル」という三つのプロダクトを開発・運営するスタートアップです。一つひとつの現場の課題に、長く向き合います。</p>
   </div>
 </header>
@@ -273,6 +293,7 @@
 </footer>
 
 <script src="js/main.js"></script>
+<script src="js/hero-spark.js"></script>
 <script>
   // ── Supabase連携設定 ──
   // komiruプロジェクトのURLとanon keyに差し替えてください
