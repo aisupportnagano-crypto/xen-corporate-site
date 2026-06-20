@@ -207,12 +207,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // ── 見出しの文字分割アニメーション ──
+  // ── 見出しのタイプライターアニメーション ──
   // [data-split-text] が付いた要素の中身を1文字ずつ <span class="ch"> に分解し、
-  // 順番にディレイをつけて立ち上がるアニメーションを発生させる
+  // 左から順番にタイプライターのように瞬間表示していく。
+  // <br> はそのまま改行として残し、既存の <span class="accent-xxx"> も保持する。
+  // 全文字を表示し終えたら、末尾にカーソルを置いて点滅させ続ける。
   document.querySelectorAll('[data-split-text]').forEach((el) => {
     const html = el.innerHTML;
-    // <br> はそのまま改行として残し、それ以外のテキストノードだけ文字分割する
+    const TYPE_SPEED = 0.045; // 1文字あたりの間隔（秒）。日本語の見出しなので少しゆっくりめ
     const parts = html.split(/(<br\s*\/?>)/i);
     let charIndex = 0;
     const built = parts.map(part => {
@@ -222,7 +224,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (/^<span/i.test(match)) {
           const inner = match.replace(/^<span([^>]*)>/i, '').replace(/<\/span>$/i, '');
           const wrappedInner = inner.split('').map(c => {
-            const delay = (charIndex++ * 0.025).toFixed(3);
+            const delay = (charIndex++ * TYPE_SPEED).toFixed(3);
             const safe = c === ' ' ? '&nbsp;' : c;
             const spClass = c === ' ' ? 'ch sp' : 'ch';
             return `<span class="${spClass}" style="--d:${delay}s">${safe}</span>`;
@@ -231,13 +233,18 @@ document.addEventListener('DOMContentLoaded', () => {
           const attrs = attrMatch ? attrMatch[1] : '';
           return `<span${attrs}>${wrappedInner}</span>`;
         }
-        const delay = (charIndex++ * 0.025).toFixed(3);
+        const delay = (charIndex++ * TYPE_SPEED).toFixed(3);
         const safe = match === ' ' ? '&nbsp;' : match;
         const spClass = match === ' ' ? 'ch sp' : 'ch';
         return `<span class="${spClass}" style="--d:${delay}s">${safe}</span>`;
       });
     }).join('');
-    el.innerHTML = `<span class="split-line">${built}</span>`;
+
+    // 全文字表示完了のタイミングに合わせてカーソルを末尾に追加
+    const cursorDelay = (charIndex * TYPE_SPEED).toFixed(3);
+    const cursor = `<span class="type-cursor" style="--cursor-d:${cursorDelay}s"></span>`;
+
+    el.innerHTML = `<span class="split-line">${built}${cursor}</span>`;
   });
 
   // ── ヒーロー：Canvasメッシュグラデーション ──
