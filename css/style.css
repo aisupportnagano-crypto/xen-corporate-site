@@ -422,6 +422,9 @@ section { position: relative; }
   margin: 22px 0 24px;
   max-width: 880px;
 }
+@media (max-width: 600px) {
+  .hero h1 { font-size: clamp(20px, 6.2vw, 32px); }
+}
 .hero h1 .accent-teal { color: var(--teal); }
 .hero h1 .accent-terra { color: var(--terra); }
 .hero h1 .accent-indigo { color: var(--indigo); }
