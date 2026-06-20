@@ -14,20 +14,20 @@
      ============================================================ */
   .ph-spotlight-wrap {
     position: absolute;
-    top: 6%;
-    bottom: 8%;
-    right: 0;
-    width: clamp(300px, 26vw, 560px);
+    inset: 0;
     z-index: 1;
+    opacity: .58;
     pointer-events: auto;
-    -webkit-mask-image: radial-gradient(ellipse 68% 72% at 58% 50%, black 50%, transparent 100%);
-    mask-image: radial-gradient(ellipse 68% 72% at 58% 50%, black 50%, transparent 100%);
-    filter: drop-shadow(0 0 50px rgba(107, 95, 255, .12));
+    -webkit-mask-image:
+      linear-gradient(122deg, transparent 0%, transparent 38%, black 72%, black 100%),
+      radial-gradient(ellipse 85% 80% at 72% 38%, black 40%, transparent 88%);
+    -webkit-mask-composite: source-in;
+    mask-image:
+      linear-gradient(122deg, transparent 0%, transparent 38%, black 72%, black 100%),
+      radial-gradient(ellipse 85% 80% at 72% 38%, black 40%, transparent 88%);
+    mask-composite: intersect;
   }
-  .xen-spot { width: 100%; height: 100%; aspect-ratio: auto; max-height: none; }
-  @media (max-width: 1280px) {
-    .ph-spotlight-wrap { display: none; } /* 横幅が狭いとテキストと干渉するため非表示 */
-  }
+  .xen-spot { width: 100%; height: 100%; aspect-ratio: auto; max-height: none; border-radius: 0; }
 </style>
 </head>
 <body>
