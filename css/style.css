@@ -696,10 +696,11 @@ section { position: relative; }
 .icon-indigo { background: rgba(107,95,255,.12); color: var(--indigo-deep); }
 
 /* ============================================================
-   Card glow border（カードごとに色を変えた回転グラデーション縁取り）
+   Card glow border（カードごとに色を変えたネオン縁取り）
    ホバー時（PC）／.glow-play クラス付与時（スマホ：スクロールで
-   画面に入ったら一度だけ自動再生）に、カードの縁を単色グラデーションの
-   光が回転しながら縁取り、背景にぼかしたグローが浮かぶ。
+   画面に入ったら一度だけ自動再生）に、カードの「縁の線だけ」を
+   単色グラデーションのネオン光が回転しながら周回する。
+   カード内部・背景は色づかない。
    ============================================================ */
 
 .card-glow {
@@ -713,30 +714,50 @@ section { position: relative; }
 .card-glow[data-glow="teal"]   { --glow-a: #5EE8D5; --glow-b: #0D9488; }
 .card-glow[data-glow="terra"]  { --glow-a: #FF9B7E; --glow-b: #E2552F; }
 
-/* 縁取りの光：カードのすぐ裏に、わずかに大きいグラデーション板を敷き、
-   ふちだけがはみ出して見えるようにする（元実装と同じ考え方） */
+/* 縁取りのネオン線本体：グラデーション板を mask で「枠線の形」だけに
+   くり抜く。内側はくり抜かれて透明になるため、カード内部は一切色づかない。 */
 .card-glow::before {
   content: "";
   position: absolute;
-  inset: -2.5px;
-  z-index: -1;
-  border-radius: calc(var(--radius-m) + 3px);
-  background-image: linear-gradient(var(--rotate, 0deg), var(--glow-a), var(--glow-b));
+  inset: -1.5px;
+  z-index: 1;
+  padding: 1.5px;
+  border-radius: calc(var(--radius-m) + 1.5px);
+  background-image: conic-gradient(from var(--rotate, 0deg), var(--glow-a), var(--glow-b), var(--glow-a));
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
   opacity: 0;
+  pointer-events: none;
   transition: opacity .5s ease;
 }
 
-/* 背景のぼかしグロー（隣のカードに被りすぎないよう控えめなぼかし量にする） */
+/* ネオンらしい滲み：同じ枠線の形をそのままぼかして縁の外側にだけ漏らす。
+   inset を::beforeとほぼ同じにすることで、カード内部側ににじみ出ない。 */
 .card-glow::after {
   content: "";
   position: absolute;
-  inset: 10%;
-  z-index: -2;
-  border-radius: calc(var(--radius-m) + 3px);
-  background-image: linear-gradient(var(--rotate, 0deg), var(--glow-a), var(--glow-b));
-  filter: blur(20px);
-  transform: scale(0.9);
+  inset: -1.5px;
+  z-index: -1;
+  padding: 1.5px;
+  border-radius: calc(var(--radius-m) + 1.5px);
+  background-image: conic-gradient(from var(--rotate, 0deg), var(--glow-a), var(--glow-b), var(--glow-a));
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  filter: blur(6px);
   opacity: 0;
+  pointer-events: none;
   transition: opacity .5s ease;
 }
 
