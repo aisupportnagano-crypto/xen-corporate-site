@@ -212,9 +212,12 @@ document.addEventListener('DOMContentLoaded', () => {
   // 左から順番にタイプライターのように瞬間表示していく。
   // <br> はそのまま改行として残し、既存の <span class="accent-xxx"> も保持する。
   // 全文字を表示し終えたら、末尾にカーソルを置いて点滅させ続ける。
+  // 表示切り替えは CSS アニメーションの animation-delay ではなく、
+  // JS の setTimeout で直接 opacity を切り替える（ブラウザ差異による
+  // 表示漏れを避けるため、確実性を優先した実装）。
   document.querySelectorAll('[data-split-text]').forEach((el) => {
     const html = el.innerHTML;
-    const TYPE_SPEED = 0.085; // 1文字あたりの間隔（秒）。さらにゆっくりに調整
+    const TYPE_SPEED = 85; // 1文字あたりの間隔（ミリ秒）
     const parts = html.split(/(<br\s*\/?>)/i);
     let charIndex = 0;
     const built = parts.map(part => {
@@ -224,27 +227,47 @@ document.addEventListener('DOMContentLoaded', () => {
         if (/^<span/i.test(match)) {
           const inner = match.replace(/^<span([^>]*)>/i, '').replace(/<\/span>$/i, '');
           const wrappedInner = inner.split('').map(c => {
-            const delay = (charIndex++ * TYPE_SPEED).toFixed(3);
+            const idx = charIndex++;
             const safe = c === ' ' ? '&nbsp;' : c;
             const spClass = c === ' ' ? 'ch sp' : 'ch';
-            return `<span class="${spClass}" style="--d:${delay}s">${safe}</span>`;
+            return `<span class="${spClass}" data-idx="${idx}">${safe}</span>`;
           }).join('');
           const attrMatch = match.match(/^<span([^>]*)>/i);
           const attrs = attrMatch ? attrMatch[1] : '';
           return `<span${attrs}>${wrappedInner}</span>`;
         }
-        const delay = (charIndex++ * TYPE_SPEED).toFixed(3);
+        const idx = charIndex++;
         const safe = match === ' ' ? '&nbsp;' : match;
         const spClass = match === ' ' ? 'ch sp' : 'ch';
-        return `<span class="${spClass}" style="--d:${delay}s">${safe}</span>`;
+        return `<span class="${spClass}" data-idx="${idx}">${safe}</span>`;
       });
     }).join('');
 
-    // 全文字表示完了のタイミングに合わせてカーソルを末尾に追加
-    const cursorDelay = (charIndex * TYPE_SPEED).toFixed(3);
-    const cursor = `<span class="type-cursor" style="--cursor-d:${cursorDelay}s"></span>`;
-
+    const cursor = `<span class="type-cursor"></span>`;
     el.innerHTML = `<span class="split-line">${built}${cursor}</span>`;
+
+    const chEls = el.querySelectorAll('.split-line .ch');
+    const cursorEl = el.querySelector('.split-line .type-cursor');
+
+    if (prefersReducedMotion) {
+      // モーション抑制環境では即座に全文字＋カーソルを表示
+      chEls.forEach(c => c.classList.add('is-shown'));
+      if (cursorEl) cursorEl.classList.add('is-shown');
+      return;
+    }
+
+    chEls.forEach((charEl) => {
+      const idx = parseInt(charEl.getAttribute('data-idx'), 10);
+      setTimeout(() => {
+        charEl.classList.add('is-shown');
+      }, idx * TYPE_SPEED);
+    });
+
+    if (cursorEl) {
+      setTimeout(() => {
+        cursorEl.classList.add('is-shown');
+      }, charIndex * TYPE_SPEED);
+    }
   });
 
   // ── ヒーロー：Canvasメッシュグラデーション ──
