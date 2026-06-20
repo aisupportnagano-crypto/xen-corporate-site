@@ -177,23 +177,33 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // ── ホログラム演出：スマホ（ホバー不可端末）では
+  // ── ホログラム演出／カードグロー演出：スマホ（ホバー不可端末）では
   //    画面に入ったタイミングで一度だけ自動再生する ──
   if (!prefersReducedMotion) {
     const isTouchDevice = window.matchMedia('(hover: none)').matches;
-    const holograms = document.querySelectorAll('.mock-hologram');
 
-    if (isTouchDevice && holograms.length && 'IntersectionObserver' in window) {
-      const holoIo = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('holo-play');
-            holoIo.unobserve(entry.target); // 一度再生したら監視終了（再発火しない）
-          }
-        });
-      }, { threshold: 0.5 }); // モックが半分以上見えたら発火
+    if (isTouchDevice && 'IntersectionObserver' in window) {
+      // [対象セレクタ, 付与するクラス名] のペアでまとめて扱う
+      const autoPlayTargets = [
+        { selector: '.mock-hologram', playClass: 'holo-play', threshold: 0.5 },
+        { selector: '.card-glow', playClass: 'glow-play', threshold: 0.4 },
+      ];
 
-      holograms.forEach(el => holoIo.observe(el));
+      autoPlayTargets.forEach(({ selector, playClass, threshold }) => {
+        const els = document.querySelectorAll(selector);
+        if (!els.length) return;
+
+        const io = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add(playClass);
+              io.unobserve(entry.target); // 一度再生したら監視終了（再発火しない）
+            }
+          });
+        }, { threshold });
+
+        els.forEach(el => io.observe(el));
+      });
     }
   }
 
