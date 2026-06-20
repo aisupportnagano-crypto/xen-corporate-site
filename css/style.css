@@ -428,6 +428,8 @@ section { position: relative; }
 
 /* 文字分割アニメーション：1文字ずつ <span class="ch"> に包み、
    タイプライターのように左から順番に瞬間表示していく。
+   表示切り替えは JS が .is-shown クラスを付与することで行う
+   （ブラウザ間の animation-delay 計算差異を避けるため）。
    全文字が表示し終わったら、末尾にカーソルが点滅し続ける。 */
 .split-line {
   display: block;
@@ -436,13 +438,11 @@ section { position: relative; }
 .split-line .ch {
   display: inline-block;
   opacity: 0;
-  animation: chTypeIn .01s steps(1) forwards;
-  animation-delay: var(--d, 0s);
+}
+.split-line .ch.is-shown {
+  opacity: 1;
 }
 .split-line .ch.sp { width: .3em; }
-@keyframes chTypeIn {
-  to { opacity: 1; }
-}
 
 /* タイピングカーソル：見出し全体の末尾に1つだけ置く想定（JS側で挿入） */
 .split-line .type-cursor {
@@ -451,11 +451,11 @@ section { position: relative; }
   margin-left: .04em;
   background: currentColor;
   opacity: 0;
-  animation:
-    chTypeIn .01s steps(1) forwards var(--cursor-d, 0s),
-    cursorBlink .9s step-end infinite var(--cursor-d, 0s);
   vertical-align: -0.08em;
   height: 0.85em;
+}
+.split-line .type-cursor.is-shown {
+  animation: cursorBlink .9s step-end infinite;
 }
 @keyframes cursorBlink {
   0%, 100% { opacity: 1; }
