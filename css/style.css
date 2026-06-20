@@ -700,14 +700,14 @@ section { position: relative; }
    ホバー時（PC）／.glow-play クラス付与時（スマホ：スクロールで
    画面に入ったら一度だけ自動再生）に、カードの縁を単色グラデーションの
    ネオン光が回転しながら周回し、外側にふんわり拡がる影で
-   カードが浮いているように見せる。
+   カードが浮いているように見せる。カード表面・内部は一切色づかない。
    ============================================================ */
 
 .card-glow {
   position: relative;
   z-index: 0;
   overflow: visible;
-  isolation: isolate; /* 自身のスタッキングコンテキストを確実に作り、他カードと干渉させない */
+  isolation: isolate;
 }
 
 /* カードごとの単色グラデーション（明→暗の同系色2トーン） */
@@ -715,48 +715,62 @@ section { position: relative; }
 .card-glow[data-glow="teal"]   { --glow-a: #5EE8D5; --glow-b: #0D9488; }
 .card-glow[data-glow="terra"]  { --glow-a: #FF9B7E; --glow-b: #E2552F; }
 
-/* 縁取りのネオン線：カードのすぐ裏に円錐グラデーションの板を敷き、
-   ふちの 2px だけがはみ出して「光が周回する線」に見えるようにする。
-   カード本体（不透明な白背景）が内側を覆うので中身は色づかない。 */
-.card-glow::before {
-  content: "";
+/* 縁取りのネオン線（実要素）：padding + mask で「枠線の形」だけを
+   確実にくり抜く。実要素にすることで疑似要素より mask の挙動が安定する。 */
+.glow-ring {
+  display: block;
   position: absolute;
-  inset: -2px;
-  z-index: -1;
-  border-radius: calc(var(--radius-m) + 2px);
+  inset: -1.5px;
+  z-index: 1;
+  border-radius: calc(var(--radius-m) + 1.5px);
+  padding: 1.5px;
   background-image: conic-gradient(from var(--rotate, 0deg), var(--glow-a), var(--glow-b), var(--glow-a));
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
   opacity: 0;
   pointer-events: none;
   transition: opacity .6s ease;
-}
-
-/* 浮遊感のある外側グロー：カードの輪郭全体をぼかして、
-   下方向にもやや強めに広げることで「浮いている」影のように見せる。 */
-.card-glow::after {
-  content: "";
-  position: absolute;
-  inset: -10px;
-  z-index: -2;
-  border-radius: calc(var(--radius-m) + 10px);
-  background-image: conic-gradient(from var(--rotate, 0deg), var(--glow-a), var(--glow-b), var(--glow-a));
-  filter: blur(26px);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity .6s ease;
-}
-
-.card-glow::before,
-.card-glow::after {
   animation: card-glow-spin 3.2s linear infinite;
   animation-play-state: paused;
 }
 
-.card-glow:hover::before,
+/* 浮遊感のある外側グロー（疑似要素）：カードの輪郭から十分外側に離して
+   大きくぼかすことで、カード本体には重ならず「下に浮かぶ光」として見せる。 */
+.card-glow::after {
+  content: "";
+  position: absolute;
+  inset: -14px;
+  z-index: -1;
+  border-radius: calc(var(--radius-m) + 14px);
+  background-image: conic-gradient(from var(--rotate, 0deg), var(--glow-a), var(--glow-b), var(--glow-a));
+  filter: blur(30px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .6s ease;
+  animation: card-glow-spin 3.2s linear infinite;
+  animation-play-state: paused;
+}
+
+.card-glow:hover .glow-ring,
 .card-glow:hover::after,
-.card-glow.glow-play::before,
+.card-glow.glow-play .glow-ring,
 .card-glow.glow-play::after {
   opacity: 1;
   animation-play-state: running;
+}
+.card-glow:hover .glow-ring,
+.card-glow.glow-play .glow-ring {
+  opacity: .9;
+}
+.card-glow:hover::after,
+.card-glow.glow-play::after {
+  opacity: .55;
 }
 
 /* ホバー中はカード本体も少し浮き上がらせて、影との立体感を強める */
