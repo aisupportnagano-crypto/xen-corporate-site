@@ -214,7 +214,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // 全文字を表示し終えたら、末尾にカーソルを置いて点滅させ続ける。
   document.querySelectorAll('[data-split-text]').forEach((el) => {
     const html = el.innerHTML;
-    const TYPE_SPEED = 0.045; // 1文字あたりの間隔（秒）。日本語の見出しなので少しゆっくりめ
+    const TYPE_SPEED = 0.085; // 1文字あたりの間隔（秒）。さらにゆっくりに調整
     const parts = html.split(/(<br\s*\/?>)/i);
     let charIndex = 0;
     const built = parts.map(part => {
