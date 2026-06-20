@@ -6,6 +6,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700;900&family=Noto+Sans+JP:wght@400;500;600;700;900&display=swap');
 
+/* カードのグロー縁取り回転に使う角度カスタムプロパティ。
+   @property で型を宣言することで、角度が補間（なめらかに回転）できるようになる。
+   非対応ブラウザでは単に未使用の変数として無視される（フォールバックは下記参照）。 */
+@property --rotate {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
 :root {
   /* ── Core palette ── */
   --ink:        #0A0A0C;   /* dark hero bg */
@@ -685,6 +694,79 @@ section { position: relative; }
 .icon-teal   { background: rgba(20,184,166,.12); color: var(--teal-deep); }
 .icon-terra  { background: rgba(255,107,74,.12); color: var(--terra-deep); }
 .icon-indigo { background: rgba(107,95,255,.12); color: var(--indigo-deep); }
+
+/* ============================================================
+   Card glow border（カードごとに色を変えた回転グラデーション縁取り）
+   ホバー時（PC）／.glow-play クラス付与時（スマホ：スクロールで
+   画面に入ったら一度だけ自動再生）に、カードの縁を単色グラデーションの
+   光が回転しながら縁取り、背景にぼかしたグローが浮かぶ。
+   ============================================================ */
+
+.card-glow {
+  position: relative;
+  z-index: 0;
+  overflow: visible;
+}
+
+/* カードごとの単色グラデーション（明→暗の同系色2トーン） */
+.card-glow[data-glow="indigo"] { --glow-a: #8B7FFF; --glow-b: #4B3FE0; }
+.card-glow[data-glow="teal"]   { --glow-a: #5EE8D5; --glow-b: #0D9488; }
+.card-glow[data-glow="terra"]  { --glow-a: #FF9B7E; --glow-b: #E2552F; }
+
+/* 縁取りの光：カードのすぐ裏に、わずかに大きいグラデーション板を敷き、
+   ふちだけがはみ出して見えるようにする（元実装と同じ考え方） */
+.card-glow::before {
+  content: "";
+  position: absolute;
+  inset: -2.5px;
+  z-index: -1;
+  border-radius: calc(var(--radius-m) + 3px);
+  background-image: linear-gradient(var(--rotate, 0deg), var(--glow-a), var(--glow-b));
+  opacity: 0;
+  transition: opacity .5s ease;
+}
+
+/* 背景のぼかしグロー（隣のカードに被りすぎないよう控えめなぼかし量にする） */
+.card-glow::after {
+  content: "";
+  position: absolute;
+  inset: 10%;
+  z-index: -2;
+  border-radius: calc(var(--radius-m) + 3px);
+  background-image: linear-gradient(var(--rotate, 0deg), var(--glow-a), var(--glow-b));
+  filter: blur(20px);
+  transform: scale(0.9);
+  opacity: 0;
+  transition: opacity .5s ease;
+}
+
+@supports (animation: spin 1s) {
+  .card-glow::before,
+  .card-glow::after {
+    animation: card-glow-spin 3s linear infinite;
+    animation-play-state: paused;
+  }
+}
+
+.card-glow:hover::before,
+.card-glow:hover::after,
+.card-glow.glow-play::before,
+.card-glow.glow-play::after {
+  opacity: 1;
+  animation-play-state: running;
+}
+
+@keyframes card-glow-spin {
+  0%   { --rotate: 0deg; }
+  100% { --rotate: 360deg; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card-glow::before, .card-glow::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
 
 /* ============================================================
    Stats strip
