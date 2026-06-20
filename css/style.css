@@ -495,14 +495,6 @@ section { position: relative; }
   position: relative;
   overflow: hidden;
 }
-.page-hero::before {
-  content: '';
-  position: absolute;
-  top: -30%; right: -10%;
-  width: 55%; height: 90%;
-  background: radial-gradient(circle, var(--indigo-glow) 0%, transparent 68%);
-  pointer-events: none;
-}
 .page-hero h1 {
   font-size: clamp(30px, 4.6vw, 48px);
   margin: 18px 0 18px;
