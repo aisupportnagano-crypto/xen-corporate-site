@@ -218,7 +218,7 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('[data-split-text]').forEach((el) => {
     const html = el.innerHTML;
     const TYPE_SPEED = 85; // 1文字あたりの間隔（ミリ秒）
-    const parts = html.split(/(<br\s*\/?>)/i);
+    const parts = html.split(/(<br[^>]*>)/i);
     let charIndex = 0;
     const built = parts.map(part => {
       if (/^<br/i.test(part)) return part;
