@@ -434,7 +434,7 @@ section { position: relative; }
 }
 .hero h1 .hero-br-mobile { display: none; }
 @media (max-width: 600px) {
-  .hero h1 { font-size: clamp(21px, 4.6vw, 28px); }
+  .hero h1 { font-size: clamp(21px, 7vw, 40px); }
   .hero h1 .hero-br-mobile { display: inline; }
 }
 @media (min-width: 900px) {
