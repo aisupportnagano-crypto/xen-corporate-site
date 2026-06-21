@@ -528,7 +528,7 @@ section { position: relative; }
      ページヒーローに限り wrap の幅制約を外し、見出しが画面幅を
      活かして大きく表示されるようにする。モバイルは元のまま。 */
   .page-hero .wrap { max-width: none; padding-left: 64px; padding-right: 64px; }
-  .page-hero h1 { font-size: clamp(48px, 7.4vw, 130px); max-width: none; }
+  .page-hero h1 { font-size: clamp(48px, 7.4vw, 88px); max-width: none; }
 }
 .page-hero p {
   font-size: 16px;
