@@ -433,7 +433,7 @@ section { position: relative; }
   max-width: 1100px;
 }
 @media (max-width: 600px) {
-  .hero h1 { font-size: clamp(32px, 4.6vw, 47px); }
+  .hero h1 { font-size: clamp(30px, 4.6vw, 45px); }
 }
 @media (min-width: 900px) {
   /* products.html / company.html の .page-hero と同様、PCでは wrap の
