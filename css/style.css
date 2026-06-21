@@ -46,6 +46,10 @@
   --radius-l: 22px;
 
   --wrap: 1140px;
+  /* 画面幅に応じて 18px〜28px の間で滑らかに変化する左右余白。
+     幅約467px以上(タブレット・PC)では従来通り28pxで変化なし。
+     スマホ等の狭い画面でのみ、余白が縮小して本文領域を広く確保する。 */
+  --wrap-pad: clamp(18px, 6vw, 28px);
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -78,7 +82,7 @@ button { font: inherit; cursor: pointer; }
 .wrap {
   max-width: var(--wrap);
   margin: 0 auto;
-  padding: 0 28px;
+  padding: 0 var(--wrap-pad);
 }
 
 /* ============================================================
@@ -179,7 +183,7 @@ section { position: relative; }
 .gnav-inner {
   max-width: var(--wrap);
   margin: 0 auto;
-  padding: 0 28px;
+  padding: 0 var(--wrap-pad);
   height: 68px;
   display: flex;
   align-items: center;
@@ -1127,7 +1131,7 @@ section { position: relative; }
   background: var(--ink);
   display: flex;
   flex-direction: column;
-  padding: 24px 28px;
+  padding: 24px var(--wrap-pad);
   transform: translateX(100%);
   transition: transform .3s ease;
 }
