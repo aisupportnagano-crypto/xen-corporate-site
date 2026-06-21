@@ -24,7 +24,7 @@
     font-family:var(--f-mono); font-weight:600; font-size:10px;
     letter-spacing:.05em; text-transform:uppercase; color:var(--teal); margin-bottom:4px;
   }
-  .qnn-instructions, h1 { top:14px; left:14px; font-size:10.5px; line-height:1.5; } .qnn-instructions [class*="line"], h1 [class*="line"] { display: block !important; white-space: nowrap; }
+  .qnn-instructions { top:14px; left:14px; font-size:10.5px; line-height:1.5; max-width:175px; }
   .qnn-theme { top:14px; right:14px; display:flex; flex-direction:column; gap:7px; }
   .qnn-theme-grid { display:grid; grid-template-columns:repeat(4, 1fr); gap:5px; }
   .qnn-theme-btn { width:18px; height:18px; border-radius:5px; border:1.5px solid rgba(255,255,255,.35); cursor:pointer; padding:0; }
@@ -53,7 +53,6 @@
     .qnn-theme-btn { width:14px; height:14px; }
     .qnn-density { display:none; } /* カードとの余白を確保するためスマホでは非表示(テーマ切替のみ残す) */
     .qnn-controls { bottom:8px; padding:5px 7px; gap:4px; }
-    h1 { font-size: clamp(18px, 3.5vw, 24px) !important; }
     .qnn-btn { padding:4px 8px; font-size:9.5px; }
   }
 </style>
@@ -104,16 +103,7 @@
   <div class="hero-mouse-glow" aria-hidden="true"></div>
   <div class="wrap hero-inner">
     <div class="eyebrow">合同会社XEN — 伝える、つくる、見せる。</div>
-    <h1 data-split-text>
-  思いを言葉に。言葉を<span class="accent-teal">「インフラ」</span>に。<br>
-  人と未来を正しくつなぐ、<br>
-  <span class="accent-highlight">核となるテクノロジー。</span>
-    </h1>
-    <style>
-    .accent-teal { color: #00f3ff !important; font-weight: bold; }
-    .accent-highlight { color: #ff6b00 !important; }
-  </style>
-
+    <h1 data-split-text>現場の「伝わらない」を、<br>技術で<span class="accent-teal">「コミる」</span>に変える、<br><span class="accent-terra">三つのプロダクト。</span></h1>
     <p class="hero-sub reveal is-visible" style="transition-delay:.1s">
       合同会社XENは、情報発信を支える<strong style="color:var(--text-on-dark)">コミル</strong>、求人LPをつくる<strong style="color:var(--text-on-dark)">ツクル</strong>、ホームページをつくる<strong style="color:var(--text-on-dark)">ミセル</strong>を開発・運営するスタートアップです。それぞれ独立したプロダクトとして、現場ごとの「伝わらない」に向き合っています。
     </p>
@@ -399,8 +389,8 @@
   </div>
 
   <div class="wrap" style="position:relative;z-index:10;">
-    <div class="quote-block reveal" style="background:rgba(255,255,255,.04);border:1px solid var(--ink-line);">
-      <p class="q" style="color:var(--text-on-dark)">伝える。つながる。関係をつくる。私たちの社会を底辺で支えるインフラの正体は、そんな人々の温かな営みの連鎖です。だからこそXENは、技術の力であらゆる壁を越えてゆきます。泥臭く、しかし真実が詰まった「現場の生の声」が、決して途切れることなく、最も鮮やかな形となって世界へ響き渡るように。</p>
+    <div class="quote-block reveal" style="background:transparent;">
+      <p class="q" style="color:var(--text-on-dark)">「コミる」とは、伝える・つながる・関係をつくること。<br>XENは技術を通して、現場の言葉にならない魅力を、ちゃんと届く形に変えていきます。</p>
       <div class="who">
         <div>
           <div class="name" style="color:var(--text-on-dark)">合同会社XEN</div>
