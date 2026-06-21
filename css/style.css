@@ -421,13 +421,19 @@ section { position: relative; }
 }
 
 .hero h1 {
-  font-size: clamp(34px, 5.6vw, 60px);
+  /* 旧: clamp(34px, 5.6vw, 60px) / max-width:880px だと、
+     1行目「思いを言葉に。言葉を「インフラ」に。」が画面幅・フォントサイズ
+     によらずほぼ常に収まりきらず、本来は4行に折り返してしまっていた
+     （以前は別バグの white-space:nowrap が偶然はみ出しを隠して3行に
+     "見えていた" だけで、実際には文字が枠からはみ出/クリップされていた）。
+     320px〜2560px幅で実機検証し、正しく3行に収まる値へ調整。 */
+  font-size: clamp(26px, 5.04vw, 54px);
   letter-spacing: -.02em;
   margin: 22px 0 24px;
-  max-width: 880px;
+  max-width: 1100px;
 }
 @media (max-width: 600px) {
-  .hero h1 { font-size: clamp(20px, 6.2vw, 32px); }
+  .hero h1 { font-size: clamp(15px, 4vw, 28px); }
 }
 .hero h1 .accent-teal { color: var(--teal); }
 .hero h1 .accent-terra { color: var(--terra); }
