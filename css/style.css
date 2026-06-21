@@ -435,6 +435,16 @@ section { position: relative; }
 @media (max-width: 600px) {
   .hero h1 { font-size: clamp(15px, 4vw, 28px); }
 }
+@media (min-width: 900px) {
+  /* products.html / company.html の .page-hero と同様、PCでは wrap の
+     最大幅(1140px)制約を外して見出しをより大きく・太く見せる。
+     900px〜2560px幅で実機検証し、3行に収まる上限として68pxを採用
+     （文章が長いため page-hero ほど巨大化はできないが、現状より
+     大幅に大きくなる）。本文・ボタン・カード部分は独自にmax-widthを
+     持つか自然なサイズのため、ここでは横幅が広がっても崩れない。 */
+  .hero .wrap { max-width: none; padding-left: 40px; padding-right: 40px; }
+  .hero h1 { font-size: clamp(41px, 4.98vw, 68px); max-width: none; }
+}
 .hero h1 .accent-teal { color: var(--teal); }
 .hero h1 .accent-terra { color: var(--terra); }
 .hero h1 .accent-indigo { color: var(--indigo); }
