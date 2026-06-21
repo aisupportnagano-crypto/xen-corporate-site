@@ -496,11 +496,19 @@ section { position: relative; }
   overflow: hidden;
 }
 .page-hero h1 {
-  font-size: clamp(30px, 4.6vw, 48px);
+  font-size: clamp(30px, 5.8vw, 92px);
   margin: 18px 0 18px;
   position: relative;
   z-index: 2;
-  max-width: 760px;
+  max-width: 1500px;
+}
+@media (min-width: 900px) {
+  /* PCでは背景(スパーク演出含む)が画面いっぱいに対し、見出しが
+     wrapの最大幅(1140px)に閉じ込められて余白が目立っていたため、
+     ページヒーローに限り wrap の幅制約を外し、見出しが画面幅を
+     活かして大きく表示されるようにする。モバイルは元のまま。 */
+  .page-hero .wrap { max-width: none; padding-left: 64px; padding-right: 64px; }
+  .page-hero h1 { font-size: clamp(48px, 7.4vw, 130px); max-width: none; }
 }
 .page-hero p {
   font-size: 16px;
