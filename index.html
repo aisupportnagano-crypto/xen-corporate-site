@@ -24,7 +24,7 @@
     font-family:var(--f-mono); font-weight:600; font-size:10px;
     letter-spacing:.05em; text-transform:uppercase; color:var(--teal); margin-bottom:4px;
   }
-  .qnn-instructions { top:14px; left:14px; font-size:10.5px; line-height:1.5; max-width:175px; }
+  .qnn-instructions, h1 { top:14px; left:14px; font-size:10.5px; line-height:1.5; } .qnn-instructions [class*="line"], h1 [class*="line"] { display: block !important; white-space: nowrap; }
   .qnn-theme { top:14px; right:14px; display:flex; flex-direction:column; gap:7px; }
   .qnn-theme-grid { display:grid; grid-template-columns:repeat(4, 1fr); gap:5px; }
   .qnn-theme-btn { width:18px; height:18px; border-radius:5px; border:1.5px solid rgba(255,255,255,.35); cursor:pointer; padding:0; }
@@ -53,6 +53,7 @@
     .qnn-theme-btn { width:14px; height:14px; }
     .qnn-density { display:none; } /* カードとの余白を確保するためスマホでは非表示(テーマ切替のみ残す) */
     .qnn-controls { bottom:8px; padding:5px 7px; gap:4px; }
+    h1 { font-size: clamp(18px, 3.2vw, 22px) !important; }
     .qnn-btn { padding:4px 8px; font-size:9.5px; }
   }
 </style>
