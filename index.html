@@ -415,6 +415,227 @@
   </div>
 </section>
 
+<!-- XEN WEB STUDIO BANNER -->
+<section id="xemb" aria-label="WEB制作スタジオのご案内">
+<style>
+  #xemb{position:relative;background:#06040c;overflow:hidden;isolation:isolate;}
+  #xemb *{box-sizing:border-box;}
+  #xemb .xemb-canvas{position:absolute;inset:0;width:100%;height:100%;z-index:0;opacity:.9;}
+  /* marquee */
+  #xemb .xemb-marquee{position:relative;z-index:2;overflow:hidden;border-top:1px solid rgba(244,241,255,.10);border-bottom:1px solid rgba(244,241,255,.10);padding:10px 0;background:rgba(6,4,12,.55);backdrop-filter:blur(2px);}
+  #xemb .xemb-marquee-inner{display:flex;width:max-content;animation:xembSlide 26s linear infinite;}
+  #xemb .xemb-marquee.rev .xemb-marquee-inner{animation-direction:reverse;}
+  #xemb .xemb-marquee span{font-family:'Courier New',monospace;font-weight:600;font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:rgba(244,241,255,.42);white-space:nowrap;padding-right:48px;}
+  #xemb .xemb-marquee span i{font-style:normal;color:#00e5ff;}
+  @keyframes xembSlide{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+  /* layout */
+  #xemb .xemb-wrap{position:relative;z-index:2;max-width:1120px;margin:0 auto;padding:88px 24px;display:grid;grid-template-columns:1.1fr .9fr;gap:56px;align-items:center;}
+  #xemb .xemb-tagrow{display:flex;align-items:center;gap:12px;margin-bottom:22px;flex-wrap:wrap;}
+  #xemb .xemb-tag{font-family:'Courier New',monospace;font-size:10.5px;font-weight:700;letter-spacing:.22em;color:#06040c;background:linear-gradient(90deg,#00e5ff,#8b5cf6);padding:6px 14px;border-radius:3px;text-transform:uppercase;}
+  #xemb .xemb-tagnote{font-size:12px;color:rgba(244,241,255,.55);letter-spacing:.06em;}
+  #xemb h2.xemb-title{margin:0 0 20px;font-weight:800;font-size:clamp(30px,4.4vw,52px);line-height:1.18;color:#f4f1ff;letter-spacing:.01em;}
+  #xemb h2.xemb-title .xemb-line{display:block;}
+  #xemb h2.xemb-title .xemb-grad{background:linear-gradient(90deg,#00e5ff 0%,#8b5cf6 55%,#ff2e88 100%);-webkit-background-clip:text;background-clip:text;color:transparent;}
+  #xemb .xemb-lead{margin:0 0 26px;max-width:480px;font-size:15px;line-height:1.9;color:rgba(244,241,255,.66);}
+  #xemb .xemb-chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:34px;}
+  #xemb .xemb-chip{font-family:'Courier New',monospace;font-size:11px;letter-spacing:.1em;color:rgba(244,241,255,.75);border:1px solid rgba(244,241,255,.22);padding:6px 13px;border-radius:999px;background:rgba(244,241,255,.04);}
+  #xemb .xemb-ctarow{display:flex;align-items:center;gap:22px;flex-wrap:wrap;}
+  #xemb .xemb-cta{position:relative;display:inline-flex;align-items:center;gap:12px;padding:16px 34px;border-radius:999px;background:linear-gradient(90deg,#00e5ff,#8b5cf6 60%,#ff2e88);color:#06040c;font-weight:800;font-size:15px;letter-spacing:.03em;text-decoration:none;transition:box-shadow .3s ease,transform .25s ease;will-change:transform;box-shadow:0 0 0 rgba(0,229,255,0);}
+  #xemb .xemb-cta:hover{box-shadow:0 8px 34px rgba(139,92,246,.45),0 0 22px rgba(0,229,255,.35);}
+  #xemb .xemb-cta .xemb-arrow{display:inline-block;transition:transform .3s cubic-bezier(.2,.8,.2,1);font-weight:800;}
+  #xemb .xemb-cta:hover .xemb-arrow{transform:translateX(6px);}
+  #xemb .xemb-sublink{color:rgba(244,241,255,.6);font-size:13.5px;text-decoration:none;border-bottom:1px solid rgba(244,241,255,.25);padding-bottom:2px;transition:color .25s,border-color .25s;}
+  #xemb .xemb-sublink:hover{color:#00e5ff;border-color:#00e5ff;}
+  /* preview card */
+  #xemb .xemb-card{position:relative;display:block;text-decoration:none;border-radius:14px;border:1px solid rgba(244,241,255,.16);background:#0b0817;overflow:hidden;transform-style:preserve-3d;transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s ease;box-shadow:0 24px 70px rgba(0,0,0,.55);will-change:transform;}
+  #xemb .xemb-card:hover{box-shadow:0 34px 90px rgba(139,92,246,.28),0 24px 70px rgba(0,0,0,.6);}
+  #xemb .xemb-cardbar{display:flex;align-items:center;gap:6px;padding:11px 14px;background:rgba(244,241,255,.05);border-bottom:1px solid rgba(244,241,255,.10);}
+  #xemb .xemb-cardbar b{width:9px;height:9px;border-radius:50%;background:rgba(244,241,255,.18);}
+  #xemb .xemb-cardbar .xemb-url{margin-left:8px;font-family:'Courier New',monospace;font-size:11px;letter-spacing:.06em;color:rgba(244,241,255,.5);}
+  #xemb .xemb-live{margin-left:auto;display:inline-flex;align-items:center;gap:6px;font-family:'Courier New',monospace;font-size:10px;letter-spacing:.18em;color:#00e5ff;}
+  #xemb .xemb-live u{width:7px;height:7px;border-radius:50%;background:#00e5ff;text-decoration:none;animation:xembPulse 1.6s ease-in-out infinite;}
+  @keyframes xembPulse{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(0,229,255,.5)}50%{opacity:.5;box-shadow:0 0 0 6px rgba(0,229,255,0)}}
+  #xemb .xemb-cardbody{position:relative;height:280px;overflow:hidden;}
+  #xemb .xemb-aurora{position:absolute;inset:-30%;background:
+    radial-gradient(38% 42% at 28% 34%,rgba(0,229,255,.5),transparent 68%),
+    radial-gradient(44% 46% at 72% 62%,rgba(255,46,136,.42),transparent 70%),
+    radial-gradient(50% 55% at 52% 46%,rgba(139,92,246,.4),transparent 72%);
+    filter:blur(6px);animation:xembAurora 9s ease-in-out infinite alternate;}
+  @keyframes xembAurora{from{transform:rotate(-4deg) scale(1)}to{transform:rotate(5deg) scale(1.14)}}
+  #xemb .xemb-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(244,241,255,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(244,241,255,.07) 1px,transparent 1px);background-size:34px 34px;mask-image:radial-gradient(80% 80% at 50% 50%,#000 30%,transparent 100%);-webkit-mask-image:radial-gradient(80% 80% at 50% 50%,#000 30%,transparent 100%);}
+  #xemb .xemb-shine{position:absolute;inset:0;background:linear-gradient(115deg,transparent 42%,rgba(244,241,255,.14) 50%,transparent 58%);transform:translateX(-120%);}
+  #xemb .xemb-card:hover .xemb-shine{animation:xembShine 1.1s ease forwards;}
+  @keyframes xembShine{to{transform:translateX(120%)}}
+  #xemb .xemb-cardlabel{position:absolute;left:22px;bottom:20px;right:22px;}
+  #xemb .xemb-cardlabel .t{font-weight:800;font-size:19px;color:#f4f1ff;letter-spacing:.02em;margin-bottom:6px;}
+  #xemb .xemb-cardlabel .d{font-size:12.5px;line-height:1.7;color:rgba(244,241,255,.62);}
+  #xemb .xemb-cardlabel .m{margin-top:12px;display:inline-flex;align-items:center;gap:8px;font-family:'Courier New',monospace;font-size:11px;letter-spacing:.16em;color:#00e5ff;text-transform:uppercase;}
+  @media (max-width:860px){
+    #xemb .xemb-wrap{grid-template-columns:1fr;gap:40px;padding:64px 20px;}
+    #xemb .xemb-cardbody{height:220px;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    #xemb .xemb-marquee-inner{animation:none;}
+    #xemb .xemb-aurora{animation:none;}
+    #xemb .xemb-live u{animation:none;}
+    #xemb .xemb-card:hover .xemb-shine{animation:none;}
+  }
+</style>
+
+<canvas class="xemb-canvas" id="xembCanvas" aria-hidden="true"></canvas>
+
+<div class="xemb-marquee" aria-hidden="true"><div class="xemb-marquee-inner">
+  <span>THREE.JS <i>//</i> WEBGL <i>//</i> GLSL SHADER <i>//</i> MOTION DESIGN <i>//</i> INTERACTIVE 3D <i>//</i> LP制作 <i>//</i> HP制作 <i>//</i></span><span>THREE.JS <i>//</i> WEBGL <i>//</i> GLSL SHADER <i>//</i> MOTION DESIGN <i>//</i> INTERACTIVE 3D <i>//</i> LP制作 <i>//</i> HP制作 <i>//</i></span>
+</div></div>
+
+<div class="xemb-wrap">
+  <div>
+    <div class="xemb-tagrow">
+      <span class="xemb-tag">XEN WEB STUDIO</span>
+      <span class="xemb-tagnote">WEB制作・LP制作の専門チーム</span>
+    </div>
+    <h2 class="xemb-title">
+      <span class="xemb-line xemb-decode" data-text="WEBに、">WEBに、</span>
+      <span class="xemb-line xemb-grad xemb-decode" data-text="圧倒的な体験を。">圧倒的な体験を。</span>
+    </h2>
+    <p class="xemb-lead">Three.js・WebGL・GLSLシェーダー。プロダクト開発で磨いた技術力を、そのままWEB制作・LP制作に。「テンプレートでは伝わらない」を、実装力で解決する専門チームです。</p>
+    <div class="xemb-chips">
+      <span class="xemb-chip">WebGL / Three.js 専門</span>
+      <span class="xemb-chip">GLSLシェーダー開発</span>
+      <span class="xemb-chip">軽量化・速度最適化</span>
+    </div>
+    <div class="xemb-ctarow">
+      <a class="xemb-cta" id="xembCta" href="studio/index.html" target="_blank" rel="noopener">スタジオサイトを体験する <span class="xemb-arrow">→</span></a>
+      <a class="xemb-sublink" href="studio/index.html#section-works" target="_blank" rel="noopener">制作実績を見る</a>
+    </div>
+  </div>
+
+  <a class="xemb-card" id="xembCard" href="studio/index.html" target="_blank" rel="noopener" aria-label="XEN WEB STUDIOのサイトを開く">
+    <div class="xemb-cardbar"><b></b><b></b><b></b><span class="xemb-url">xen-studio.jp</span><span class="xemb-live"><u></u>LIVE DEMO</span></div>
+    <div class="xemb-cardbody">
+      <div class="xemb-aurora"></div>
+      <div class="xemb-grid"></div>
+      <div class="xemb-shine"></div>
+      <div class="xemb-cardlabel">
+        <div class="t">GLSL Shader Lab 搭載</div>
+        <div class="d">スクロール連動の3D空間、リアルタイムシェーダーのライブ描画。スタジオサイト自体が、私たちの技術デモです。</div>
+        <div class="m">Enter the studio <span>→</span></div>
+      </div>
+    </div>
+  </a>
+</div>
+
+<div class="xemb-marquee rev" aria-hidden="true"><div class="xemb-marquee-inner">
+  <span>AWARD-GRADE MOTION <i>//</i> SCROLL EXPERIENCE <i>//</i> REALTIME RENDERING <i>//</i> PERFORMANCE FIRST <i>//</i> 演出設計 <i>//</i></span><span>AWARD-GRADE MOTION <i>//</i> SCROLL EXPERIENCE <i>//</i> REALTIME RENDERING <i>//</i> PERFORMANCE FIRST <i>//</i> 演出設計 <i>//</i></span>
+</div></div>
+
+<script>
+(function(){
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---- canvas: flowing neon ribbons ---- */
+  var cv = document.getElementById('xembCanvas');
+  if (cv && cv.getContext) {
+    var ctx = cv.getContext('2d'), W = 0, H = 0, t = 0, running = false, dpr = Math.min(window.devicePixelRatio || 1, 2);
+    function size(){
+      var sec = document.getElementById('xemb');
+      W = sec.offsetWidth; H = sec.offsetHeight;
+      cv.width = W * dpr; cv.height = H * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+    function ribbon(yBase, amp, freq, phase, c1, c2, alpha){
+      var g = ctx.createLinearGradient(0, 0, W, 0);
+      g.addColorStop(0, c1); g.addColorStop(1, c2);
+      ctx.strokeStyle = g; ctx.globalAlpha = alpha; ctx.lineWidth = 1.4;
+      ctx.shadowBlur = 14; ctx.shadowColor = c2;
+      ctx.beginPath();
+      for (var x = -10; x <= W + 10; x += 7) {
+        var y = yBase + Math.sin(x * freq + t * 0.9 + phase) * amp
+                      + Math.sin(x * freq * 0.37 + t * 0.55 + phase * 2.1) * amp * 0.55;
+        x === -10 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+      }
+      ctx.stroke();
+    }
+    function frame(){
+      ctx.clearRect(0, 0, W, H);
+      ctx.globalCompositeOperation = 'lighter';
+      ribbon(H * 0.30, 26, 0.006, 0.0, 'rgba(0,229,255,.9)',  'rgba(139,92,246,.9)', .38);
+      ribbon(H * 0.52, 34, 0.005, 2.1, 'rgba(139,92,246,.9)', 'rgba(255,46,136,.9)', .30);
+      ribbon(H * 0.74, 22, 0.007, 4.2, 'rgba(255,46,136,.8)', 'rgba(0,229,255,.8)',  .26);
+      ctx.globalCompositeOperation = 'source-over';
+      ctx.shadowBlur = 0;
+    }
+    function loop(){ if (!running) return; t += 0.016; frame(); requestAnimationFrame(loop); }
+    size();
+    window.addEventListener('resize', size);
+    if (reduced) { t = 3; frame(); }
+    else if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function(es){
+        es.forEach(function(e){
+          if (e.isIntersecting && !running) { running = true; loop(); }
+          else if (!e.isIntersecting) { running = false; }
+        });
+      }, { threshold: 0.05 }).observe(cv);
+    } else { running = true; loop(); }
+  }
+
+  /* ---- text decode/scramble on reveal ---- */
+  if (!reduced && 'IntersectionObserver' in window) {
+    var CHARS = '01<>/\\#*+=ΞΣΔ◆▲■XENWEB';
+    function decode(el){
+      var orig = el.getAttribute('data-text'), total = 26, f = 0;
+      (function step(){
+        f++;
+        var p = f / total, out = '';
+        for (var i = 0; i < orig.length; i++) {
+          out += (i / orig.length < p) ? orig[i] : CHARS[Math.random() * CHARS.length | 0];
+        }
+        el.textContent = out;
+        if (f < total) requestAnimationFrame(step); else el.textContent = orig;
+      })();
+    }
+    var done = false;
+    new IntersectionObserver(function(es, obs){
+      es.forEach(function(e){
+        if (e.isIntersecting && !done) {
+          done = true;
+          var els = document.querySelectorAll('#xemb .xemb-decode');
+          els.forEach ? els.forEach(function(el, i){ setTimeout(function(){ decode(el); }, i * 160); })
+                      : Array.prototype.forEach.call(els, function(el, i){ setTimeout(function(){ decode(el); }, i * 160); });
+          obs.disconnect();
+        }
+      });
+    }, { threshold: 0.4 }).observe(document.querySelector('#xemb .xemb-title'));
+  }
+
+  /* ---- magnetic CTA ---- */
+  var cta = document.getElementById('xembCta');
+  if (cta && !reduced && window.matchMedia('(pointer:fine)').matches) {
+    cta.addEventListener('pointermove', function(e){
+      var r = cta.getBoundingClientRect();
+      var dx = (e.clientX - r.left - r.width / 2) / (r.width / 2);
+      var dy = (e.clientY - r.top - r.height / 2) / (r.height / 2);
+      cta.style.transform = 'translate(' + (dx * 5) + 'px,' + (dy * 4) + 'px)';
+    });
+    cta.addEventListener('pointerleave', function(){ cta.style.transform = ''; });
+  }
+
+  /* ---- 3D tilt card ---- */
+  var card = document.getElementById('xembCard');
+  if (card && !reduced && window.matchMedia('(pointer:fine)').matches) {
+    card.addEventListener('pointermove', function(e){
+      var r = card.getBoundingClientRect();
+      var px = (e.clientX - r.left) / r.width - 0.5;
+      var py = (e.clientY - r.top) / r.height - 0.5;
+      card.style.transform = 'perspective(900px) rotateY(' + (px * 9) + 'deg) rotateX(' + (-py * 8) + 'deg) translateY(-4px)';
+    });
+    card.addEventListener('pointerleave', function(){ card.style.transform = ''; });
+  }
+})();
+</script>
+</section>
+
+
 <!-- QUOTE / MISSION -->
 <section class="section--dark pad-l" id="mission-neural" style="position:relative;overflow:hidden;">
   <canvas id="quote-neural-canvas" class="qnn-canvas"></canvas>
@@ -485,6 +706,7 @@
           <li><a href="products.html#komiru">コミル</a></li>
           <li><a href="products.html#tsukuru">ツクル</a></li>
           <li><a href="products.html#miseru">ミセル</a></li>
+          <li><a href="studio/index.html" target="_blank" rel="noopener">WEB制作スタジオ</a></li>
         </ul>
       </div>
       <div class="footer-col">
